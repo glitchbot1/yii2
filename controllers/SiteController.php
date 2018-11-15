@@ -1,13 +1,13 @@
 <?php
 
 namespace app\controllers;
-use app\models\Profile;
-use app\models\Signup;
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
+use app\models\Profile;
+use app\models\Signup;
 use yii\filters\VerbFilter;
 use app\models\Login;
+use yii\web\Controller;
 use yii\web\UploadedFile;
 
 
@@ -16,30 +16,36 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+      public function behaviors()
+      {
+          return [
+              'access' => [
+                  'class' => AccessControl::className(),
+                  'only' => ['logout'],
+                  'rules' => [
+                      [
+                          'actions' => ['logout'],
+                          'allow' => true,
+                          'roles' => ['@'],
+                      ],
+                      [
+                      'actions' => ['profile'],
+                      'allow' => true,
+                      'roles' => ['@'],
+                      ],
+               ],
 
+              ],
+              'verbs' => [
+                  'class' => VerbFilter::className(),
+                  'actions' => [
+                      'logout' => ['post'],
+                      'profile' => ['post'],
+                  ],
+              ],
 
-        ];
-    }
+          ];
+      }
     public function actionProfile()  // action личный профиль
     {
         $profile_model = ($profile_model = Profile::findOne(Yii::$app->user->id)) ? $profile_model : new Profile();

@@ -8,6 +8,7 @@ use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -19,14 +20,24 @@ class CategoryController extends Controller
      */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
+      return [
+        'access' => [
+          'class' => AccessControl::className(),
+          'rules' => [
+            [
+              'allow' => true,
+              'roles' => ['@'],
             ],
-        ];
+          ],
+        ],
+        'verbs' => [
+          'class' => VerbFilter::className(),
+          'actions' => [
+            'delete' => ['POST'],
+          ],
+        ],
+
+      ];
     }
 
     /**
