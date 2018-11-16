@@ -7,56 +7,89 @@ use Yii;
 /**
  * This is the model class for table "post".
  *
- * @property int $id
+ * @property int $user_id
  * @property string $title
  * @property string $description
  * @property string $date
  * @property int $price
  * @property int $category_id
+ * @property int $city_id
  * @property bool $isActive
  * @property string $image
- * @property int $city_id
+ *
+ * @property User $user
  */
 class Post extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
-        return 'post';
-    }
+        public static function tableName()
+        {
+            return 'post';
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
+      public function rules()
+      {
         return [
-            [['description'], 'string'],
-            [['date'], 'safe'],
-            [['price', 'category_id', 'city_id'], 'default', 'value' => null],
-            [['price', 'category_id', 'city_id'], 'integer'],
-            [['isActive'], 'boolean'],
-            [['title', 'image'], 'string', 'max' => 255],
+          ['title','required','message'=>'Заполните Заголовок объявления'],
+          ['description','required','message'=>'Заполните Описание объявления'],
+          ['city_id','required','message'=>'Укажите свой город'],
+          ['category_id','required','message'=>'Укажите свой город'],
+          ['price','required','message'=>'Укажите цену'],
+          ['price','integer','message'=>'Введите только цифры'],
+          ['image','image','extensions'=>'jpg,png,jpeg','message'=>'Неверный формат файла. Выберите фотографию формата jpg, jpeg, png'],
+          ['image','file', 'maxSize' => 1024*1024*10, 'message'=>'Выберите аватарку до 10 Мб.'],
         ];
-    }
+      }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
+      /**
+       * {@inheritdoc}
+       */
+      public function attributeLabels()
+      {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'date' => 'Date',
-            'price' => 'Price',
-            'category_id' => 'Category ID',
-            'isActive' => 'Is Active',
-            'image' => 'Image',
-            'city_id' => 'City ID',
+          'user_ID' => 'User_ID',
+          'title' => 'Заголовок',
+          'category_id' => 'Категория',
+          'description' => 'Описание',
+          'city_id' => 'Город',
+          'price' => 'Цена',
+          'image' => 'Картинка',
+          'date' => 'Дата',
+          'isActive' => 'Is Active',
+
         ];
-    }
+      }
+      public function updatePost($post)
+      {
+        $post->title=$this->title;
+        $post->category_id = $this->category_id;
+        $post->description = $this->description;
+        $post->city_id = $this->city_id;
+        $post->price = $this->price;
+        return $post->save()? true: false;
+      }
+      public function updateImage()
+      {
+        if($this->validate() && !empty($this->image))
+        {
+          return $this->image->saveAs('post/'.$this->image->baseName. '.' . $this->image->extension);
+        }
+        else{
+          return false;
+        }
+      }
+      public function getCategory()
+      {
+        return $this->hasOne(Post::className(),['id'=>'category_id']);
+      }
+      public function getCity()
+      {
+        return $this->hasOne(City::className(),['id'=>'city_id']);
+      }
+      public function getUser()
+      {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+      }
 }

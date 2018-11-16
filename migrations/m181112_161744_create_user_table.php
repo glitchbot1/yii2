@@ -13,13 +13,10 @@ class m181112_161744_create_user_table extends Migration
     public function safeUp()
     {
         $this->createTable('profile', [
-            'user_id' => $this->primaryKey(),
+            'id' => $this->primaryKey(),
             'name'=>$this->string(),
-            'city_id'=>$this->integer(),
-            'phone'=>$this->integer(),
-            'description'=>$this->text(),
-            'dateRegistration'=>$this->date(),
-            'photo'=>$this->string()->defaultValue(null),
+            'password'=>$this->string(),
+            'isAdmin'=>$this->boolean()->defaultValue(0),
         ]);
         $this->addForeignKey('profile_user', 'profile', 'user_id', 'user', 'id', 'cascade', 'cascade');
     }

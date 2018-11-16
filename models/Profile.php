@@ -22,7 +22,6 @@ class Profile extends \yii\db\ActiveRecord
 
 
 
-
     public static function tableName()
     {
         return 'profile';
@@ -81,8 +80,8 @@ class Profile extends \yii\db\ActiveRecord
     public function upload()
     {
 
-        if($this->validate()){
-        $this->photo->saveAs('image/'.$this->photo->baseName. '.' . $this->photo->extension);
+        if($this->validate() && !empty($this->photo) ){
+       return $this->photo->saveAs('image/'.$this->photo->baseName. '.' . $this->photo->extension);
         }else{
             return false;
         }
