@@ -28,15 +28,24 @@ AppAsset::register($this);
 
 
 <div class="wrap">
-    <nav class="navbar navbar-light bg-danger">
+    <nav class="navbar navbar-collapse ">
     <div class = "nav navbar-nav navbar-right ">
 
 
         <?php if(Yii::$app->user->isGuest):?>
+
           <div class="navbar-brand mb-0 h1"> <a href="<?= Url::toRoute(['/user/login'])?>">Авторизация</a></div>
 
           <div class="navbar-brand mb-0 h1"><a href="<?= Url::toRoute(['/user/signup'])?>">Регистрация</a></div>
         <?php else: ?>
+          <li>
+            <?= Html::beginForm(['/site/index'], 'post')
+            . Html::submitButton(
+              'Домой',
+              ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
+            )
+            . Html::endForm() ?>
+          </li> <li>
           <li>
             <?= Html::beginForm(['/post/post'], 'post')
             . Html::submitButton(
@@ -79,13 +88,13 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+<!--<footer class="footer">-->
+<!--    <div class="container">-->
+<!--        <p class="pull-left">&copy; My Company --><?//= date('Y') ?><!--</p>-->
+<!---->
+<!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
+<!--    </div>-->
+<!--</footer>-->
 
 <?php $this->endBody() ?>
 </body>

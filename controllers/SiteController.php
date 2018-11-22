@@ -4,19 +4,17 @@ namespace app\controllers;
 use app\models\Post;
 use Yii;
 use yii\filters\AccessControl;
-use app\models\Profile;
-use app\models\Signup;
 use yii\filters\VerbFilter;
-use app\models\Login;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\UploadedFile;
-
+use app\models\City;
+use app\models\SiteSearch;
+use app\models\Category;
+use yii\data\Pagination;
 
 class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
       public function behaviors()
       {
           return [
@@ -25,13 +23,43 @@ class SiteController extends Controller
           ];
       }
 
+      public function beforeAction($action)
+      {
+        $model_search = new SiteSearch();
+        if($model_search->load(Yii::$app->request->post()) && $model_search->validate())
+        {
+          $search = Html::encode($model_search->search);
+          return $this->redirect(Yii::$app->urlManager->createUrl(['site/search','search'=>$search]));
+        }
+        return true;
+      }
 
+      public function actionSearch()
+      {
+        $search = Yii::$app->request->get('search');
+        $query = Post::find()->where(['like','title',$search]);
+        $pages = new Pagination(['totalCount' => $query->count()]);
+        $model = $query->offset($pages->offset)->limit($pages->limit)->orderBy('date DESC')->all();
 
-    public function actionIndex()
-    {
+        return $this->render('search',[
+          'model'=>$model,
+          'pages'=>$pages,
+          'search'=>$search,
+        ]);
+      }
 
-      return $this->render('index');
-    }
+       public function actionIndex()
+      {
+          $query = Post::find();
+          $pages = new Pagination(['totalCount' => $query->count()]);
+          $model = $query->offset($pages->offset)->limit($pages->limit)->orderBy('date DESC')->all();
+
+        return $this->render('index',[
+          'model'=>$model,
+          'pages'=>$pages,
+        ]);
+      }
+
 
 
 }

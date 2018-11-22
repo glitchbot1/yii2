@@ -1,13 +1,18 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
 use yii\helpers\ArrayHelper;
 
 ?>
 
-<h1>Добавить объявление</h1>
 
+<h1>Добавить объявление</h1>
+  <?php if( Yii::$app->session->hasFlash('success') ): ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <?php echo Yii::$app->session->getFlash('success'); ?>
+    </div>
+  <?php endif;?>
   <?php $form=ActiveForm::begin([
       'id'=>'post_form',
       'class'=>'form-horizontal',
@@ -18,7 +23,7 @@ use yii\helpers\ArrayHelper;
     ])?>
       <div class="container">
         <div class="row">
-          <img  src="post/<?= $post_model->image?>" alt="fdg">
+          <img  src="/post/<?= $post_model->image?>" alt="fdg">
 
           <div class="col-sm-8 col-md-8 col-lg-8">
             <?= $form->field($post_model,'title')->textInput() ?>
@@ -29,13 +34,8 @@ use yii\helpers\ArrayHelper;
             <?= $form->field($post_model,'image')->fileInput()?>
             <?= Html::submitButton('Сохранить',['class'=> 'btn btn-success'])?>
 
+
           </div>
         </div>
       </div>
-    <?php if( Yii::$app->session->hasFlash('success') ): ?>
-      <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?php echo Yii::$app->session->getFlash('success'); ?>
-      </div>
-    <?php endif;?>
   <?php ActiveForm::end()?>

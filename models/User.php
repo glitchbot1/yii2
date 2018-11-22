@@ -13,6 +13,8 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $password
  * @property int $isAdmin
+ *
+ * @property Post[] $posts
  * @property Profile @profile
  */
 
@@ -50,10 +52,18 @@ class User extends ActiveRecord implements IdentityInterface
             'isAdmin' => 'Is Admin',
         ];
     }
+    public function getPosts()
+    {
+      return $this->hasMany(Post::className(), ['user_id' => 'id']);
+    }
+
+
     public function getProfile()
     {
         return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
+
+
     public function setPassword($password)
     {
         $this->password = sha1($password);
@@ -79,4 +89,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
     }
+
 }

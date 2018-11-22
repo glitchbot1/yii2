@@ -123,3 +123,25 @@ a.desc:after {
 .profile__btn_save {
     margin-left: 62%;
 }
+.notice__image {
+    width: 300px;
+}
+.container__post {
+    border: 1px solid gray;
+}
+
+.post {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    min-height: 340px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.post__image{
+    width: 250px;
+    
+}
+
