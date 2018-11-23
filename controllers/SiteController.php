@@ -12,6 +12,7 @@ use app\models\City;
 use app\models\SiteSearch;
 use app\models\Category;
 use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
@@ -50,6 +51,7 @@ class SiteController extends Controller
 
        public function actionIndex()
       {
+
           $query = Post::find();
           $pages = new Pagination(['totalCount' => $query->count()]);
           $model = $query->offset($pages->offset)->limit($pages->limit)->orderBy('date DESC')->all();
@@ -57,6 +59,7 @@ class SiteController extends Controller
         return $this->render('index',[
           'model'=>$model,
           'pages'=>$pages,
+
         ]);
       }
 

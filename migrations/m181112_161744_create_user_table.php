@@ -16,7 +16,7 @@ class m181112_161744_create_user_table extends Migration
             'id' => $this->primaryKey(),
             'name'=>$this->string(),
             'password'=>$this->string(),
-            'isAdmin'=>$this->boolean()->defaultValue(0),
+            'isAdmin'=>$this->boolean()->defaultValue(False),
         ]);
     }
 

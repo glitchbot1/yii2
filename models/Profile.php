@@ -40,6 +40,8 @@ class Profile extends \yii\db\ActiveRecord
             [['phone'],'integer','min'=>10, 'message'=>'Только 10 цифр'],
             ['photo','image','extensions'=>'jpg,png,jpeg','message'=>'Выберите аватарку формата jpg, jpeg, png '],
             ['photo','file', 'maxSize' => 1024*1024*3, 'message'=>'Выберите аватарку до 3 Мб.'],
+            [['dateRegistration'],'date','format'=>'php:Y-m-d H:i:s'],
+            ['dateRegistration','default','value'=>date('Y-m-d H:i:s')],
         ];
     }
 
@@ -49,7 +51,7 @@ class Profile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => '',
+            'user_id' => 'user_id',
             'name' => 'Имя',
             'city_id' => 'Город',
             'phone' => ' телефона 7+',

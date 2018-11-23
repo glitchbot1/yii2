@@ -95,6 +95,7 @@ class Post extends \yii\db\ActiveRecord
       if($this->validate() && !empty($this->image))
       {
         return $this->image->saveAs('post/'.$this->image->baseName. '.' . $this->image->extension);
+
       }
       else{
         return false;

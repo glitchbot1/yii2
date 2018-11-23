@@ -12,9 +12,9 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
+
+
     public static function tableName()
     {
         return 'category';
@@ -39,5 +39,10 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
         ];
+    }
+
+    public function getCategory(){
+
+      return $this->hasMany(Category::className(), ['id' => 'category_id']);
     }
 }

@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-
+use yii\helpers\Url;
 ?>
 
 
@@ -23,8 +23,7 @@ use yii\helpers\ArrayHelper;
     ])?>
       <div class="container">
         <div class="row">
-          <img  src="/post/<?= $post_model->image?>" alt="fdg">
-
+          <img class="post__image" src="/post/<?= $post_model->image?>" alt="fdg">
           <div class="col-sm-8 col-md-8 col-lg-8">
             <?= $form->field($post_model,'title')->textInput() ?>
             <?= $form->field($post_model,'category_id')->dropDownList(ArrayHelper::map(\app\models\Category::find()->all(), 'id','title'))?>

@@ -6,13 +6,9 @@ use yii\widgets\LinkPager;
 use app\models\SiteSearch;
 use yii\helpers\Url;
 use app\models\Category;
+use app\models\City;
 \app\assets\SiteAsset::register($this);
 ?>
-
-
-<?php //$form = ActiveForm::begin();?>
-<?//= $form->field($model,'category_id')->dropDownList(\app\models\Category::find()->asArray()->all())?>
-<?php //  ActiveForm::end()?>
 
 <div class="row p-5 bg-info">
   <div class="col-md-6">
@@ -23,12 +19,18 @@ use app\models\Category;
       id="category"
     >
       <option disabled selected>Категория</option>
-      <option value="Недвижимость">Недвижимость</option>
+      <?php $categories = Category::find()->all() ;?>
+      <?php foreach($categories as $categorie): ?>
+        <option value="<?= $categorie->title?>"><?= $categorie->title?></option>
+      <?php endforeach; ?>
     </select>
 
     <select class="btn btn-primary" size="1" name="city" id="city">
       <option disabled selected>Город</option>
-      <option value="South Eldoramouth">South Eldoramouth</option>
+      <?php $city = City::find()->all()?>
+        <?php foreach ($city as $town): ?>
+      <option value="<?= $town->city?>"><?= $town->city?></option>
+      <?php endforeach; ?>
     </select>
   </div>
 
