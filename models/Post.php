@@ -32,6 +32,7 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
       return [
+        ['isActive','boolean'],
         ['title','required','message'=>'Заполните Заголовок объявления'],
         ['description','required','message'=>'Заполните Описание объявления'],
         ['city_id','required','message'=>'Укажите свой город'],

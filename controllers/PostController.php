@@ -46,7 +46,7 @@ class PostController extends Controller
 
     public function actionPost() //создание объявления
     {
-        $post_model=new Post(); //cjplftv yjdsq j,]trn
+        $post_model=new Post(); //создаем новый объект
 
         if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()): //загружаем его и проверяем валидацией
 
@@ -68,7 +68,8 @@ class PostController extends Controller
     public function actionNotice() //страница объявлений ползователя
     {
 
-        $notice_model = Post::find()->where(['user_id'=>Yii::$app->user->id])->all();
+        $notice_model = Post::find()->where(['user_id'=>Yii::$app->user->id])->all(); //объявления текущего пользователя
+
 
         return $this->render('notice',['notice_model'=>$notice_model,]);
     }
@@ -106,13 +107,18 @@ class PostController extends Controller
           ]);
     }
 
-      public function actionDelete($id)
+      public function actionClose($id) //удалени
       {
-        if (isset($id)) {
-          if (Post::deleteAll(['id' => $id])) {
-            $this->redirect(['notice']);
-          } else
-            $this->redirect(['notice']);
-        }
+        $post = Post::findOne($id);
+        $post->isActive = false;
+        $post->update();
+        return $this->redirect(['notice']);
       }
+    public function actionOpen($id) //удалени
+    {
+      $post = Post::findOne($id);
+      $post->isActive = true;
+      $post->update();
+      return $this->redirect(['notice']);
+    }
 }

@@ -24,10 +24,10 @@ class SiteController extends Controller
           ];
       }
 
-      public function beforeAction($action)
+      public function beforeAction($action) //метод вызавается перед вызовым страницы
       {
-        $model_search = new SiteSearch();
-        if($model_search->load(Yii::$app->request->post()) && $model_search->validate())
+        $model_search = new SiteSearch(); //создаем модель
+        if($model_search->load(Yii::$app->request->post()) && $model_search->validate()) //загружаем в модель запрос
         {
           $search = Html::encode($model_search->search);
           return $this->redirect(Yii::$app->urlManager->createUrl(['site/search','search'=>$search]));
@@ -35,7 +35,7 @@ class SiteController extends Controller
         return true;
       }
 
-      public function actionSearch()
+      public function actionSearch() //поиск объявлений
       {
         $search = Yii::$app->request->get('search');
         $query = Post::find()->where(['like','title',$search]);
@@ -49,7 +49,7 @@ class SiteController extends Controller
         ]);
       }
 
-       public function actionIndex()
+       public function actionIndex() //вывод всех объявлений на главную страницу и пагинация
       {
 
           $query = Post::find();
