@@ -33,13 +33,13 @@ class Post extends \yii\db\ActiveRecord
     {
       return [
         ['isActive','boolean'],
-        ['title','required','message'=>'Заполните Заголовок объявления'],
-        ['description','required','message'=>'Заполните Описание объявления'],
+        ['title','required','message'=>'Заполните заголовок объявления'],
+        ['description','required','message'=>'Заполните описание объявления'],
         ['city_id','required','message'=>'Укажите свой город'],
-        ['category_id','required','message'=>'Укажите свой город'],
+        ['category_id','required','message'=>'Выбрите категорию'],
         ['price','required','message'=>'Укажите цену'],
         ['price','integer','message'=>'Введите только цифры'],
-        ['image','image','extensions'=>'jpg,png,jpeg','message'=>'Неверный формат файла. Выберите фотографию формата jpg, jpeg, png'],
+        ['image','image','extensions'=>'jpg,png,jpeg','message'=>'Выберите фотографию формата jpg, jpeg, png'],
         ['image','file', 'maxSize' => 1024*1024*10, 'message'=>'Выберите аватарку до 10 Мб.'],
         [['date'],'date','format'=>'php:Y-m-d H:i:s'],
         ['date','default','value'=>date('Y-m-d H:i:s')],
@@ -73,6 +73,7 @@ class Post extends \yii\db\ActiveRecord
 
       return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
+
 
     public function getCity(){
 

@@ -14,5 +14,6 @@ use \yii\widgets\ActiveField;
 <?= $form->field($update_model,'city_id')->dropDownList(ArrayHelper::map(\app\models\City::find()->all(), 'id','city'))?>
 <?= $form->field($update_model,'price')->textInput() ?>
 <?= $form->field($update_model,'image')->fileInput()?>
-<?= Html::submitButton('Сохранить',['class'=> 'btn btn-success'])?>
+<?php echo Html::a('<span class="glyphicon glyphicon-trash"></span>', ['post/update', 'id' => $update_model->id]); ?>
+<?= Html::submitButton('Сохранить изменения',['class'=> 'btn btn-success'])?>
 <?php ActiveForm::end()?>

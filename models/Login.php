@@ -14,9 +14,11 @@ class Login extends Model
     {
         return
         [
-            [['email','password'],'required'],
-            ['email','email'],
-            ['password', 'validatePassword'],
+          [['email'],'email','message'=>'Это не email,исправьте'],
+          [['password'],'validatePassword'],
+          ['email','required','message'=>'Пожалуйста заполните email'],
+          ['password','required','message'=>'Пожалуйста заполните Пароль'],
+
 
         ];
     }

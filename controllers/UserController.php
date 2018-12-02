@@ -7,8 +7,10 @@ use app\models\Profile;
 use app\models\Signup;
 use yii\filters\VerbFilter;
 use app\models\Login;
+use app\models\City;
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use yii\widgets\Pjax;
 
 
 class UserController extends Controller
@@ -19,23 +21,19 @@ class UserController extends Controller
         return [
           'access' => [
               'class' => AccessControl::className(),
-              'only' => ['logout'],
+              'only' => ['profile','signup','login','logout'],
               'rules' => [
               [
-                'actions' => ['logout'],
                 'allow' => true,
+                'actions' => ['profile','logout'],
                 'roles' => ['@'],
               ],
               [
-                'actions' => ['profile'],
                 'allow' => true,
-                'roles' => ['@'],
+                'actions' => ['signup','login'],
+                'roles' => ['?'],
               ],
-              [
-                'actions' => ['notice'],
-                'allow' => true,
-                'roles' => ['@'],
-              ],
+
             ],
 
           ],
@@ -52,25 +50,31 @@ class UserController extends Controller
 
       public function actionProfile()  // action личный профиль
       {
+
+        $city = City::find()->all();
+
         $profile_model = ($profile_model = Profile::findOne(Yii::$app->user->id)) ? $profile_model : new Profile();
-        //Если данные текущего пользователя найдены заносим их в объект $profile_model, иначе создаем новый объект.
-        if ($profile_model->load(Yii::$app->request->post()) && $profile_model->validate()):
-          //если форма была отправлена, то даные с формы загружаются в объект модели и проверяем на валидногсть
 
-          $profile_model->photo = UploadedFile::getInstance($profile_model,'photo');
+       // if(Yii::$app->request->isPjax) {
+          //Если данные текущего пользователя найдены заносим их в объект $profile_model, иначе создаем новый объект.
+          if ($profile_model->load(Yii::$app->request->post()) && $profile_model->validate()):
+            //если форма была отправлена, то даные с формы загружаются в объект модели и проверяем на валидногсть
 
-          if( $profile_model->updateProfile($profile_model) && $profile_model->upload()):// вызываем метод их модели,если запись данных прошла успешно
+            $profile_model->photo = UploadedFile::getInstance($profile_model, 'photo');
 
-            Yii::$app->session->setFlash('success', 'Профиль изменен');
 
-          else:// запись если  произошла ошибка
+            if ($profile_model->updateProfile($profile_model) && $profile_model->uploadImage($profile_model,$profile_model->photo)):// вызываем метод  модели,если запись данных прошла успешно
 
-            Yii::$app->session->setFlash('error', 'Профиль не измененн');
+              Yii::$app->session->setFlash('success', 'Профиль изменен');
 
-            return $this->refresh(); // перезагрузка страницы
+            else:// запись если  произошла ошибка
+
+              Yii::$app->session->setFlash('error', 'Профиль не измененн');
+
+            endif;
           endif;
-        endif;
-      return $this->render('profile',['profile_model'=>$profile_model]);
+       // }
+      return $this->render('profile',['profile_model'=>$profile_model,'city'=>$city]);
       }
 
       public function actionSignup()  // action регистрации
@@ -105,7 +109,7 @@ class UserController extends Controller
             if ($login_model->validate())
             {
               Yii::$app->user->login($login_model->getUser());
-              return $this->goHome();
+              return $this->redirect('profile');
             }
           }
         }

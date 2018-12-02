@@ -1,14 +1,9 @@
 <?php
 
-
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\helpers\Url;
-use yii\bootstrap\ActiveForm;
-
 
 AppAsset::register($this);
 ?>
@@ -26,14 +21,13 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 
-
 <div class="wrap">
     <nav class="navbar navbar-collapse ">
     <div class = "nav navbar-nav navbar-right ">
 
 
         <?php if(Yii::$app->user->isGuest):?>
-
+          <div class="navbar-brand mb-0 h1"> <a href="<?= Url::toRoute(['/site/index'])?>">На главную</a></div>
           <div class="navbar-brand mb-0 h1"> <a href="<?= Url::toRoute(['/user/login'])?>">Авторизация</a></div>
 
           <div class="navbar-brand mb-0 h1"><a href="<?= Url::toRoute(['/user/signup'])?>">Регистрация</a></div>
@@ -45,7 +39,7 @@ AppAsset::register($this);
               ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
             )
             . Html::endForm() ?>
-          </li> <li>
+          </li>
           <li>
             <?= Html::beginForm(['/post/post'], 'post')
             . Html::submitButton(
@@ -53,7 +47,8 @@ AppAsset::register($this);
               ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
             )
             . Html::endForm() ?>
-          </li> <li>
+          </li>
+          <li>
             <?= Html::beginForm(['/post/notice'], 'post')
             . Html::submitButton(
               'Мои объявления',

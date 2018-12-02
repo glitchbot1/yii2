@@ -6,26 +6,28 @@ use yii\bootstrap\Modal;
 use \yii\helpers\ArrayHelper;
 use app\models\City;
 use app\models\Category;
+use yii\widgets\LinkPager;
 ?>
     <h1>Мои объявления</h1>
       <div class="col-md-6">
-        <select
+        <select onchange="window.location.search += 'category=' + this.options[this.selectedIndex].value + '&'"
           class="btn btn-primary"
           size="1"
           name="category"
           id="category">
           <option disabled selected>Категория</option>
-          <?php $categories = Category::find()->all() ;?>
-          <?php foreach($categories as $categorie): ?>
-            <option value="<?= $categorie->title?>"><?= $categorie->title?></option>
-          <?php endforeach; ?>
+          <?php foreach ($categories as $category ):?>
+            <option value="<?= $category->title?>"> <?= $category->title?> </option>
+          <?php endforeach;?>
+
         </select>
-        <select class="btn btn-primary" size="1" name="city" id="city">
-          <option disabled selected>Город</option>
-          <?php $city = City::find()->all()?>
-          <?php foreach ($city as $town): ?>
-            <option value="<?= $town->city?>"><?= $town->city?></option>
-          <?php endforeach; ?>
+        <select onchange="window.location.search += 'status=' + this.options[this.selectedIndex].value + '&'"
+          class="btn btn-primary"
+          size="1" name="city"
+          id="city">>
+          <option disabled selected>Статус</option>
+          <option value="active">Активное</option>
+          <option value="close">Закрытое</option>
         </select>
       </div>
     <div class="col-md-4 pull-right">
@@ -49,6 +51,12 @@ use app\models\Category;
     </div>
     </div>
   <div class="container">
+    <?php if( Yii::$app->session->hasFlash('success') ): ?>
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?php echo Yii::$app->session->getFlash('success'); ?>
+      </div>
+    <?php endif;?>
     <?php foreach ($notice_model as $notice): ?>
     <div class="row">
       <div class="col-md-8">
@@ -56,10 +64,11 @@ use app\models\Category;
           <?= $notice->title ?>
           <?php if($notice->isActive):?>
           <a class="btn btn-default" href="<? echo Url::to(['post/close', 'id' => $notice->id]) ?>">Закрыть</a>
+            <a class="glyphicon glyphicon-pencil btn-default" href="<? echo Url::to(['post/update', 'id' => $notice->id]) ?>"></a>
           <?php else:?>
             <a class="btn btn-default" href="<? echo Url::to(['post/open', 'id' => $notice->id]) ?>">Открыть</a>
           <?php endif;?>
-          <a class="glyphicon glyphicon-pencil btn-default" href="<? echo Url::to(['post/update', 'id' => $notice->id]) ?>"></a>
+
         </h2>
         <ul class="list-inline">
           <li><?= $notice->date ?></li>
@@ -80,4 +89,6 @@ use app\models\Category;
     </div>
       <? endforeach;?>
   </div>
-
+<?= LinkPager::widget([
+  'pagination'=>$pages
+])?>

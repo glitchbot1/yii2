@@ -85,9 +85,11 @@ class User extends ActiveRecord implements IdentityInterface
     }
     public function getAuthKey()
     {
+      return $this->auth_key;
     }
     public function validateAuthKey($authKey)
     {
+      return $this->getAuthKey() === $authKey;
     }
 
 }

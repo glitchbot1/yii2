@@ -12,11 +12,11 @@ class Signup extends Model
     {
         return [
 
-            ['email','required','message'=>'Пожалуйсто заполните email'],
-            ['password','required','message'=>'Пожалуйсто заполните Пароль'],
+            ['email','required','message'=>'Пожалуйста заполните email'],
+            ['password','required','message'=>'Пожалуйста заполните Пароль'],
             [['email'],'email', 'message'=>'Неправильный email'],
             [['email'],'unique', 'targetClass'=>User::ClassName(),'message'=>'Этот email занят'],
-            [['password'],'string','min'=>6,'max'=>30 ,'message'=>'Пожалуйсто заполните password'],
+            [['password'],'string'],
 
         ];
     }

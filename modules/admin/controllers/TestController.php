@@ -8,19 +8,19 @@ use yii\filters\VerbFilter;
 
 class TestController extends Controller
 {
-  public function behaviors(){
-    return [
-      'access' => [
-        'class' => AccessControl::className(),
-        'rules' => [
-          [
-            'allow' => true,
-            'controllers' => ['admin/default'],
-            'actions' => ['@'],
-          ],
-
-        ],
-      ],
-    ];
-  }
+//  public function behaviors(){
+//    return [
+//      'access' => [
+//        'class' => AccessControl::className(),
+//        'rules' => [
+//          [
+//            'allow' => true,
+//            'controllers' => ['admin/default'],
+//            'actions' => ['?'],
+//          ],
+//
+//        ],
+//      ],
+//    ];
+//  }
 }

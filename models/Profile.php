@@ -37,9 +37,9 @@ class Profile extends \yii\db\ActiveRecord
             ['phone','required','message'=>'Укажите свой мобильный телефон'],
             ['city_id','required','message'=>'Укажите свой город'],
             ['description','string'],
-            [['phone'],'integer','min'=>10, 'message'=>'Только 10 цифр'],
+            [['phone'],'integer', 'message'=>'Только 10 цифр'],
             ['photo','image','extensions'=>'jpg,png,jpeg','message'=>'Выберите аватарку формата jpg, jpeg, png '],
-            ['photo','file', 'maxSize' => 1024*1024*3, 'message'=>'Выберите аватарку до 3 Мб.'],
+            [['photo'],'file', 'maxSize' => 1024*1024*3, 'message'=>'Выберите аватарку до 3 Мб.'],
             [['dateRegistration'],'date','format'=>'php:Y-m-d H:i:s'],
             ['dateRegistration','default','value'=>date('Y-m-d H:i:s')],
         ];
@@ -77,17 +77,40 @@ class Profile extends \yii\db\ActiveRecord
         $profile->phone = $this->phone;
         $profile->city_id = $this->city_id;
         $profile->description = $this->description;
-        return $profile->save() ? true : false;
+        return $profile->save();
 
     }
-    public function upload()
+    public function uploadImage($profile,$currentImage)
     {
 
-        if($this->validate() && !empty($this->photo) ){
-       return $this->photo->saveAs('image/'.$this->photo->baseName. '.' . $this->photo->extension);
-        }else{
-            return false;
+        if($this->validate()) {
+
+          $this->deleteCurrentImage($currentImage);
+
+          $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
+
+          return $profile->photo->saveAs($path);
         }
+
+
+    }
+    public function getFolder()
+    {
+      return Yii::getAlias('@web').'image/' ;
+    }
+
+    public function deleteCurrentImage($currentImage)
+    {
+      if($this->fileExist($currentImage))
+      {
+        unlink($this->getFolder() . $currentImage);
+      }
+
+    }
+
+    public function fileExist($currentImage)
+    {
+      return file_exists($this->getFolder() . $currentImage);
     }
 
 }

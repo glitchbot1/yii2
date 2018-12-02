@@ -25,14 +25,17 @@ use yii\helpers\Url;
         <div class="row">
           <img class="post__image" src="/post/<?= $post_model->image?>" alt="fdg">
           <div class="col-sm-8 col-md-8 col-lg-8">
+
+            <?php $items_category = ArrayHelper::map($category, 'id','title');?>
+            <?php $items_city = ArrayHelper::map($city, 'id','city');?>
+            <?php $params = ['prompt'=> ' ']?>
             <?= $form->field($post_model,'title')->textInput() ?>
-            <?= $form->field($post_model,'category_id')->dropDownList(ArrayHelper::map(\app\models\Category::find()->all(), 'id','title'))?>
+            <?= $form->field($post_model,'category_id')->dropDownList($items_category,$params)?>
             <?= $form->field($post_model,'description')->textarea(['rows'=>5]) ?>
-            <?= $form->field($post_model,'city_id')->dropDownList(ArrayHelper::map(\app\models\City::find()->all(), 'id','city'))?>
+            <?= $form->field($post_model,'city_id')->dropDownList($items_city,$params)?>
             <?= $form->field($post_model,'price')->textInput() ?>
             <?= $form->field($post_model,'image')->fileInput()?>
             <?= Html::submitButton('Сохранить',['class'=> 'btn btn-success'])?>
-
 
           </div>
         </div>
