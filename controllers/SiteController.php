@@ -24,8 +24,7 @@ class SiteController extends Controller
       public function beforeAction($action) //метод вызавается перед вызовым страницы
       {
         $model_search = new SiteSearch(); //создаем модель
-        if($model_search->load(Yii::$app->request->post()) && $model_search->validate())
-        {
+        if($model_search->load(Yii::$app->request->post()) && $model_search->validate()) {
           $search = Html::encode($model_search->search);
           return $this->redirect(Yii::$app->urlManager->createUrl(['site/search','search'=>$search]));
         }
@@ -52,21 +51,19 @@ class SiteController extends Controller
         $categories= Category::find()->all();
         $cities = City::find()->all();
 
-        if (isset($_GET['category']))
-        {
+        if (isset($_GET['category'])) {
           $category = Category::find()->where(['title'=>$_GET['category']])->all();
           $cat_id = ArrayHelper::getColumn($category,'id');
           $posts = Post::find()->where(['category_id'=>$cat_id,'isActive'=>true]);
         }
-        if (isset($_GET['city']))
-        {
+
+        if (isset($_GET['city'])) {
           $city = City::find()->where(['city'=>$_GET['city']])->all();
           $city_id = ArrayHelper::getColumn($city,'id');
           $posts = Post::find()->where(['city_id'=>$city_id,'isActive'=>true]);
         }
 
-        if (isset($_GET['category']) && isset($_GET['city']) )
-        {
+        if (isset($_GET['category']) && isset($_GET['city']) ) {
           $category = Category::find()->where(['title'=>$_GET['category']])->all();
           $cat_id = ArrayHelper::getColumn($category,'id');
           $city = City::find()->where(['city'=>$_GET['city']])->all();
@@ -74,8 +71,7 @@ class SiteController extends Controller
           $posts = Post::find()->where(['city_id'=>$city_id,'category_id'=>$cat_id,'isActive'=>true]);
         }
 
-        if (!isset($_GET['category']) && !isset($_GET['city']) )
-        {
+        if (!isset($_GET['category']) && !isset($_GET['city']) ) {
           $posts = Post::find()->where(['isActive'=>true]);
         }
 

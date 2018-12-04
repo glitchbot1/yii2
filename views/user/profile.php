@@ -11,6 +11,7 @@ use yii\widgets\Pjax;
     'options'=>[
       'class'=>'form-horizontal',
       //'data-pjax'=>true,
+
     ],
     'fieldConfig'=>[
       'template'=> '<div class="col-md-2">{label}</div><div class="col-md-7">{input}</div><div class="col-md-">{error}</div>',
@@ -23,13 +24,15 @@ use yii\widgets\Pjax;
       <div class="row">
         <div class="col-md-2 col-lg-2"></div>
         <div class="col-sm-3 col-md-2 col-lg-2">
-            <?php if($profile_model->photo) {  ?>
+            <?php if ($profile_model->photo) {  ?>
               <img class="profile__image" src="/image/<?= $profile_model->photo?>" alt="fdg">
               <?= $form->field($profile_model, 'photo')->fileInput() ?>
             <?php }  else {  ?>
               <img class="profile__image" src="/image/cap.jpg" alt="cap">
               <?= $form->field($profile_model, 'photo')->fileInput() ?>
             <?php } ?>
+
+
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
           <?php $items_city = ArrayHelper::map($city,'id','city')?>

@@ -11,7 +11,7 @@ use app\models\City;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\widgets\Pjax;
-
+use yii\web\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -37,44 +37,28 @@ class UserController extends Controller
             ],
 
           ],
-          'verbs' => [
-            'class' => VerbFilter::className(),
-            'actions' => [
-            'logout' => ['post'],
-
-            ],
-          ],
-
         ];
       }
 
       public function actionProfile()  // action личный профиль
       {
-
         $city = City::find()->all();
+        $profile_model = ($profile_model = Profile::findOne(Yii::$app->user->id)) ? $profile_model : new Profile(); //Если данные текущего пользователя найдены заносим их в объект $profile_model, иначе создаем новый объект.
 
-        $profile_model = ($profile_model = Profile::findOne(Yii::$app->user->id)) ? $profile_model : new Profile();
-
-       // if(Yii::$app->request->isPjax) {
-          //Если данные текущего пользователя найдены заносим их в объект $profile_model, иначе создаем новый объект.
-          if ($profile_model->load(Yii::$app->request->post()) && $profile_model->validate()):
-            //если форма была отправлена, то даные с формы загружаются в объект модели и проверяем на валидногсть
-
-            $profile_model->photo = UploadedFile::getInstance($profile_model, 'photo');
-
-
-            if ($profile_model->updateProfile($profile_model) && $profile_model->uploadImage($profile_model,$profile_model->photo)):// вызываем метод  модели,если запись данных прошла успешно
-
+        if ($profile_model->load(Yii::$app->request->post()) && $profile_model->validate()) { //если форма была отправлена, то даные с формы загружаются в объект модели и проверяем на валидногсть
+          $profile_model->photo = UploadedFile::getInstance($profile_model, 'photo');
+          if (!empty($profile_model->photo)) {
+            if ($profile_model->updateProfile($profile_model) && $profile_model->uploadImage($profile_model)) { // вызываем метод  модели,если запись данных прошла успешно
               Yii::$app->session->setFlash('success', 'Профиль изменен');
 
-            else:// запись если  произошла ошибка
-
+            } else { // запись если  произошла ошибка
               Yii::$app->session->setFlash('error', 'Профиль не измененн');
+            }
 
-            endif;
-          endif;
-       // }
-      return $this->render('profile',['profile_model'=>$profile_model,'city'=>$city]);
+          }
+
+        }
+        return $this->render('profile',['profile_model'=>$profile_model,'city'=>$city]);
       }
 
       public function actionSignup()  // action регистрации
@@ -92,7 +76,9 @@ class UserController extends Controller
             {
               return $this->goHome();
             }
+
           }
+
       }
     return $this->render('signup',['model'=>$model]);
       }
@@ -124,4 +110,25 @@ class UserController extends Controller
           return $this->redirect('login');
         }
       }
+//      public function actions()
+//      {
+//        return [
+//          'error'=> [
+//            'class' => 'yii\web\ErrorAction',
+//          ],
+//        ];
+//      }
+//
+//      public function actionError()
+//      {
+//        $exception = Yii::$app->errorHandler->exception;
+//        if($exception instanceof NotFoundHttpException ) {
+//          return $this->render('profile');
+//        }
+//        else{
+//          return $this->render('error',['exception'=>$exception]);
+//        }
+//      }
+
+
     }

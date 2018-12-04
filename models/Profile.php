@@ -21,7 +21,6 @@ class Profile extends \yii\db\ActiveRecord
 {
 
 
-
     public static function tableName()
     {
         return 'profile';
@@ -38,8 +37,7 @@ class Profile extends \yii\db\ActiveRecord
             ['city_id','required','message'=>'Укажите свой город'],
             ['description','string'],
             [['phone'],'integer', 'message'=>'Только 10 цифр'],
-            ['photo','image','extensions'=>'jpg,png,jpeg','message'=>'Выберите аватарку формата jpg, jpeg, png '],
-            [['photo'],'file', 'maxSize' => 1024*1024*3, 'message'=>'Выберите аватарку до 3 Мб.'],
+            [['photo'],'file', 'maxSize' => 1024*1024*3,'extensions' => 'png, jpg', 'message'=>'Выберите аватарку до 3 Мб.'],
             [['dateRegistration'],'date','format'=>'php:Y-m-d H:i:s'],
             ['dateRegistration','default','value'=>date('Y-m-d H:i:s')],
         ];
@@ -67,50 +65,49 @@ class Profile extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+      return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function updateProfile($profile)
     {
-        $profile->user_id = Yii::$app->user->id;
-        $profile->name = $this->name;
-        $profile->phone = $this->phone;
-        $profile->city_id = $this->city_id;
-        $profile->description = $this->description;
+      $profile->user_id = Yii::$app->user->id;
+      $profile->name = $this->name;
+      $profile->phone = $this->phone;
+      $profile->city_id = $this->city_id;
+      $profile->description = $this->description;
+
+//      if($profile->photo){
+//        $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
+//        $profile->photo->saveAs($path);
+//      }
+
+
         return $profile->save();
 
     }
-    public function uploadImage($profile,$currentImage)
+
+
+    public function uploadImage($profile)
     {
-
-        if($this->validate()) {
-
-          $this->deleteCurrentImage($currentImage);
-
-          $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
-
-          return $profile->photo->saveAs($path);
-        }
-
-
+      if ($this->validate()) {
+        $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
+        return $profile->photo->saveAs($path);
+      }
+      else {
+        return false;
+      }
     }
+
+
     public function getFolder()
     {
       return Yii::getAlias('@web').'image/' ;
     }
 
-    public function deleteCurrentImage($currentImage)
-    {
-      if($this->fileExist($currentImage))
-      {
-        unlink($this->getFolder() . $currentImage);
-      }
 
-    }
-
-    public function fileExist($currentImage)
-    {
-      return file_exists($this->getFolder() . $currentImage);
-    }
+//    public function fileExist($currentImage)
+//    {
+//      return file_exists($this->getFolder() . $currentImage);
+//    }
 
 }

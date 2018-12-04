@@ -48,19 +48,20 @@ class PostController extends Controller
 
         $city = City::find()->all();
 
-        if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()): //загружаем его и проверяем валидацией
+        if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()) {  //загружаем его и проверяем валидацией
 
           $post_model->image = UploadedFile::getInstance($post_model, 'image'); //метод загрузки изображения
 
-          if ($post_model->createPost($post_model) && $post_model->updateImage()): //вызываем метод создания объявления и загрузки изображения
+          if ($post_model->createPost($post_model) && $post_model->updateImage()) { //вызываем метод создания объявления и загрузки изображения
 
-                Yii::$app->session->setFlash('success', 'Объявление успешно добавлено');
+            Yii::$app->session->setFlash('success', 'Объявление успешно добавлено');
 
-          else:
+          }
+          else {
 
-                Yii::$app->session->setFlash('error', 'Ошибка');
-          endif;
-        endif;
+            Yii::$app->session->setFlash('error', 'Ошибка');
+          }
+        }
 
         return $this->render('post', [
           'post_model' => $post_model,
@@ -80,22 +81,20 @@ class PostController extends Controller
           }
 
 
-          if (isset($_GET['status']) && $_GET['status'] == 'active')
-          {
+          if (isset($_GET['status']) && $_GET['status'] == 'active') {
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id,'isActive' => true] );
           }
-          if (isset($_GET['status']) && $_GET['status'] == 'close')
-          {
+
+          if (isset($_GET['status']) && $_GET['status'] == 'close') {
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id,'isActive' => false] );
           }
-          if (!isset($_GET['status']))
-          {
+
+          if (!isset($_GET['status'])) {
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id] );
           }
 
           $pages = new Pagination(['totalCount' => $my_posts->count()]);
           $notice_model = $my_posts->offset($pages->offset)->limit($pages->limit)->orderBy('date DESC')->all();
-
 
         return $this->render('notice',[
           'notice_model'=>$notice_model,
@@ -112,25 +111,19 @@ class PostController extends Controller
         if ($update_model->load(Yii::$app->request->post()) && $update_model->validate())
         {
           $update_model->image = UploadedFile::getInstance($update_model, 'image');
-//          $imj = $update_model->image;
-//          unlink( Yii::getAlias('@web').'image/'  . $imj);
           $update_model->save();
             return $this->redirect(['post/notice']);
         }
-
-
 
         return $this->render('update',[
           'update_model'=>$update_model,
         ]);
     }
-    public function actionDeleteImage($id)
-    {
-
-
-
-
-    }
+//    public function actionDeleteImage($id)
+//    {
+//
+//
+//    }
 
     public function actionView($id) //Просмотреть объявление
     {
