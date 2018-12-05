@@ -68,7 +68,6 @@ class UserController extends Controller
         $model = new Signup();
         if(Yii::$app->request->isPjax) {
           if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->attributes = Yii::$app->request->post('Signup');
             if ($model->signup()) {
               return $this->goHome();
             }
@@ -82,7 +81,6 @@ class UserController extends Controller
         $login_model = new Login();
         if(Yii::$app->request->isPjax) {
           if ($login_model->load(Yii::$app->request->post()) && $login_model->validate()) {
-            $login_model->attributes = Yii::$app->request->post('Login');
               Yii::$app->user->login($login_model->getUser());
               return $this->redirect('profile');
           }
