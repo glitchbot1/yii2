@@ -2,6 +2,7 @@
 
 namespace app\models;
 use yii\web\UploadedFile;
+
 use Yii;
 
 /**
@@ -81,7 +82,6 @@ class Profile extends \yii\db\ActiveRecord
 //        $profile->photo->saveAs($path);
 //      }
 
-
         return $profile->save();
 
     }
@@ -92,6 +92,7 @@ class Profile extends \yii\db\ActiveRecord
       if ($this->validate()) {
         $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
         return $profile->photo->saveAs($path);
+
       }
       else {
         return false;

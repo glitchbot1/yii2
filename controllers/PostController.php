@@ -73,13 +73,11 @@ class PostController extends Controller
     {
           $categories = Category::find()->all();
 
-          if (isset($_GET['category']))
-          {
+          if (isset($_GET['category'])) {
             $category = Category::find()->where(['title'=>$_GET['category']])->all();
             $cat_id = ArrayHelper::getColumn($category,'id');
             $my_posts = Post::find()->where(['category_id'=>$cat_id]);
           }
-
 
           if (isset($_GET['status']) && $_GET['status'] == 'active') {
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id,'isActive' => true] );
@@ -108,8 +106,7 @@ class PostController extends Controller
 
       $update_model = Post::find()->where(['id'=>$id])->one();
 
-        if ($update_model->load(Yii::$app->request->post()) && $update_model->validate())
-        {
+        if ($update_model->load(Yii::$app->request->post()) && $update_model->validate()) {
           $update_model->image = UploadedFile::getInstance($update_model, 'image');
           $update_model->save();
             return $this->redirect(['post/notice']);
@@ -119,11 +116,14 @@ class PostController extends Controller
           'update_model'=>$update_model,
         ]);
     }
-//    public function actionDeleteImage($id)
-//    {
-//
-//
-//    }
+    public function actionDeleteImage($id)
+    {
+      if (file_exists()) {
+
+      }
+
+
+    }
 
     public function actionView($id) //Просмотреть объявление
     {
