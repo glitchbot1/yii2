@@ -144,6 +144,22 @@ a.desc:after {
     width: 300px;
     
 }
+.uploading-file{
+  display: none !important;
+}
 
+.img_wrapper {
+  display: table-cell;
+}
+
+.img_wrapper a{
+    vertical-align: top;
+}
+.button_update_post{
+    float: right;
+}
+textarea.form-control{
+  resize: none !important;
+}
 
 

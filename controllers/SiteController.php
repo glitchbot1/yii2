@@ -10,6 +10,7 @@ use app\models\SiteSearch;
 use app\models\Category;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
@@ -20,10 +21,22 @@ class SiteController extends Controller
 
           ];
       }
-
-      public function beforeAction($action) //метод вызавается перед вызовым страницы
+      public function actions()
       {
-        $model_search = new SiteSearch(); //создаем модель
+        return [
+          'error' => [
+            'class' => 'yii\web\ErrorAction',
+          ],
+          'captcha' => [
+            'class' => 'yii\captcha\CaptchaAction',
+            'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+          ],
+        ];
+      }
+
+      public function beforeAction($action) //Метод вызавается перед вызовым страницы
+      {
+        $model_search = new SiteSearch(); // Создаем модель
         if($model_search->load(Yii::$app->request->post()) && $model_search->validate()) {
           $search = Html::encode($model_search->search);
           return $this->redirect(Yii::$app->urlManager->createUrl(['site/search','search'=>$search]));
@@ -31,7 +44,7 @@ class SiteController extends Controller
         return true;
       }
 
-      public function actionSearch() //поиск объявлений
+      public function actionSearch() // Поиск объявлений
       {
         $search = Yii::$app->request->get('search');
         $query = Post::find()->where(['ilike','title',$search]);
@@ -44,8 +57,8 @@ class SiteController extends Controller
           'search'=>$search,
         ]);
       }
-
-       public function actionIndex() //вывод всех объявлений на главную страницу и пагинация
+      //Вывод всех объявлений на главную страницу и пагинация
+       public function actionIndex()
       {
 
         $categories= Category::find()->all();
@@ -72,7 +85,8 @@ class SiteController extends Controller
         }
 
         if (!isset($_GET['category']) && !isset($_GET['city']) ) {
-          $posts = Post::find()->where(['isActive'=>true]);
+          $posts = Post::find()->where(['isActive'=>true,]);
+
         }
 
         $pages = new Pagination(['totalCount' => $posts->count()]);
@@ -86,6 +100,7 @@ class SiteController extends Controller
 
         ]);
       }
+
 
 
 

@@ -26,7 +26,7 @@ class PostController extends Controller
            'rules'=>[
               [
                 'allow' => true,
-                'actions' => ['post','notice','update','deleteimage'],
+                'actions' => ['post','notice','update','delete-image','view','open','close'],
                 'roles'=>['@'],
               ],
               [
@@ -40,20 +40,28 @@ class PostController extends Controller
     }
 
 
-    public function actionPost() //создание объявления
+    public function actionPost() // Создание объявления
     {
-        $post_model=new Post(); //создаем новый объект
+        $post_model=new Post(); // Создаем новый объект
 
         $category = Category::find()->all();
 
         $city = City::find()->all();
+        //Загружаем его и проверяем валидацией
+        if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()) {
+          //Метод загрузки изображения
+          $image = Yii::$app->cache->get('image');
+          if(!$image) {
 
-        if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()) {  //загружаем его и проверяем валидацией
+            $image = UploadedFile::getInstance($post_model, 'image');
+            if (!is_null($image)) {
 
-          $post_model->image = UploadedFile::getInstance($post_model, 'image'); //метод загрузки изображения
-
-          if ($post_model->createPost($post_model) && $post_model->updateImage()) { //вызываем метод создания объявления и загрузки изображения
-
+              $post_model->img = $post_model->updateImage($image);
+              Yii::$app->cache->set('image',$image,3600);
+            }
+          }
+          //вызываем метод создания объявления и загрузки изображения
+            if ($post_model->createPost($post_model)) {
             Yii::$app->session->setFlash('success', 'Объявление успешно добавлено');
 
           }
@@ -69,7 +77,7 @@ class PostController extends Controller
           'city'=>$city]);
     }
 
-    public function actionNotice() //страница объявлений ползователя
+    public function actionNotice() //Страница объявлений ползователя
     {
           $categories = Category::find()->all();
 
@@ -101,14 +109,19 @@ class PostController extends Controller
         ]);
     }
 
-    public function actionUpdate($id) //редактирование объявления
+    public function actionUpdate($id) //Редактирование объявления
     {
 
       $update_model = Post::find()->where(['id'=>$id])->one();
 
         if ($update_model->load(Yii::$app->request->post()) && $update_model->validate()) {
-          $update_model->image = UploadedFile::getInstance($update_model, 'image');
+          $image = UploadedFile::getInstance($update_model, 'image');
+          if(!is_null($image)) {
+            $update_model->img = $update_model->updateImage($image);
+
+          }
           $update_model->save();
+
             return $this->redirect(['post/notice']);
         }
 
@@ -116,25 +129,37 @@ class PostController extends Controller
           'update_model'=>$update_model,
         ]);
     }
-    public function actionDeleteImage($id)
+
+    public function actionDeleteImage($id) // Удаление картинки
     {
-      if (file_exists()) {
+     $delete = Post::findOne($id);
+     $file_name = $delete->img;
+     //var_dump($file_name);
+       if(file_exists($file_path = Yii::getAlias('@web').'post/'. $file_name))
+       {
+         unlink(Yii::getAlias('@web').'post/'.$file_name);
+       }
+       if($delete)
+       {
+         $delete->img = null;
+         $delete->update();
+       }
 
-      }
-
+     Yii::$app->session->setFlash('success','Фотография удалена');
+     return $this->redirect(['notice']);
 
     }
 
-    public function actionView($id) //Просмотреть объявление
+    public function actionView($id) // Просмотреть объявление
     {
-        $notice_model = Post::find()->where(['id' => $id])->all(); //заносим данные текущего обявления в переменную $notice_model
-
-        $user_id = ArrayHelper::getColumn($notice_model, 'user_id'); // в $user_id записывает значения столбца user_id
-
-        $count_notice = Post::find()->where(['user_id'=>$user_id])->count();// записываем в переменну  $count_notice количество запсией пользователя
-
-        $user_model = Profile::find()->where(['user_id' => $user_id])->one();//заносим данные текущего пользователя в переменную $user_model
-
+        // Заносим данные текущего обявления в переменную $notice_model
+        $notice_model = Post::find()->where(['id' => $id])->all();
+        // в $user_id записывает значения столбца user_id
+        $user_id = ArrayHelper::getColumn($notice_model, 'user_id');
+        // записываем в переменну  $count_notice количество запсией пользователя
+        $count_notice = Post::find()->where(['user_id'=>$user_id])->count();
+        //заносим данные текущего пользователя в переменную $user_model
+        $user_model = Profile::find()->where(['user_id' => $user_id])->one();
 
         return $this->render('view',
           [
@@ -144,7 +169,7 @@ class PostController extends Controller
           ]);
     }
 
-      public function actionClose($id) //закрытие объявления
+      public function actionClose($id) // Закрытие объявления
       {
         $post = Post::findOne($id);
         $post->isActive = false;
@@ -152,7 +177,7 @@ class PostController extends Controller
         Yii::$app->session->setFlash('success', 'Ваше объявление успешно закрыто');
         return $this->redirect(['notice']);
       }
-      public function actionOpen($id) //открытие объявления
+      public function actionOpen($id) // Открытие объявления
       {
         $post = Post::findOne($id);
         $post->isActive = true;

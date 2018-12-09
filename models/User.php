@@ -72,14 +72,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->password === sha1($password);
     }
+
     public static function findIdentity($id)
     {
         return self::findOne($id); //запрос в базу
     }
+
     public function getId()
     {
         return $this->id;
     }
+
     public static function findIdentityByAccessToken($token, $type = null)
     {
     }

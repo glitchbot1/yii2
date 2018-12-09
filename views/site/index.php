@@ -15,27 +15,24 @@ use yii\helpers\Url;
       id="category"
       onchange="this.form.submit()"
     >
-    <option disabled selected>Категория</option>
+    <option disabled <?php  if (!isset($_GET['category'])) {echo 'selected';}?>>Категория</option>
       <?php foreach ($categories as $category ):?>
-        <option value="<?= $category->title?>"> <?= $category->title?> </option>
+        <option <?php  if (isset($_GET['category']) && $_GET['category'] == $category->title) {echo 'selected';}?> value="<?= $category->title?>"> <?= $category->title?> </option>
       <?php endforeach;?>
     </select>
-
     <select class="btn btn-primary"
             size="1"
             name="city"
             id="city"
             onchange="this.form.submit()">
-      <option disabled selected>Город</option>
+      <option disabled <?php  if (!isset($_GET['city'])) {echo 'selected';}?>>Город</option>
       <?php foreach ($cities as $city ):?>
-        <option value="<?= $city->city?>"> <?= $city->city?> </option>
+        <option <?php if (isset($_GET['city']) && $_GET['city'] == $city->city) {echo 'selected';}?>  value="<?= $city->city?>"> <?= $city->city?> </option>
       <?php endforeach;?>
 
     </select>
     </form>
   </div>
-
-
   <div class="col-md-4 pull-right">
     <form action="<?= Url::to(['/site/search']) ?>" class="form-inline">
       <div class="form-group">
@@ -56,19 +53,18 @@ use yii\helpers\Url;
     </form>
   </div>
 </div>
-
 <div class="row text-center">
   <div class="col-md-12"><h1>Актуальные объявления</h1></div>
 </div>
   <div class="row">
     <?php foreach ($model as $posts): ?>
           <div class="col-md-6">
-                <?php if($posts->image){  ?>
-                <img class="post__image" src="/post/<?= $posts->image?>" alt="Фото">
+            <a  href="<?php echo Yii::$app->urlManager->createUrl(['post/view', 'id' => $posts['id']]); ?>">
+                <?php if($posts->img){  ?>
+                <img class="post__image" src="/post/<?= $posts->img?>" alt="Фото">
                 <?php } else {  ?>
                   <img class="post__image" src="/image/no-photo.png" alt="cap">
                 <?php }  ?>
-                <a  href="<?php echo Yii::$app->urlManager->createUrl(['post/view', 'id' => $posts['id']]); ?>">
                 <p><?php echo $posts['title']?> </p></a>
                <p>Цена: <?= $posts->price ?></p>
                <p><?= $posts->date ?></p>

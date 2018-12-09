@@ -6,7 +6,6 @@ use yii\widgets\Pjax;
   <h3 class="text-center">Авторизация</h3>
   <div class="container">
     <div class="row">
-
     <?php Pjax::begin()?>
     <?php $form=ActiveForm::begin(
         [

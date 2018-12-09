@@ -8,7 +8,7 @@ use app\models\City;
 use app\models\Category;
 use yii\widgets\LinkPager;
 ?>
-    <h1>Мои объявления</h1>
+    <h1 class="text-center">Мои объявления</h1>
       <div class="col-md-6">
         <select onchange="window.location.search += 'category=' + this.options[this.selectedIndex].value + '&'"
           class="btn btn-primary"
@@ -19,7 +19,6 @@ use yii\widgets\LinkPager;
           <?php foreach ($categories as $category ):?>
             <option value="<?= $category->title?>"> <?= $category->title?> </option>
           <?php endforeach;?>
-
         </select>
         <select onchange="window.location.search += 'status=' + this.options[this.selectedIndex].value + '&'"
           class="btn btn-primary"
@@ -63,11 +62,12 @@ use yii\widgets\LinkPager;
         <h2>
           <?= $notice->title ?>
           <?php if($notice->isActive):?>
-          <a class="btn btn-default" href="<? echo Url::to(['post/close', 'id' => $notice->id]) ?>">Закрыть</a>
             <a class="glyphicon glyphicon-pencil btn-default" href="<? echo Url::to(['post/update', 'id' => $notice->id]) ?>"></a>
+            <a class="btn btn-default" href="<? echo Url::to(['post/close', 'id' => $notice->id]) ?>">Закрыть</a>
           <?php else:?>
             <a class="btn btn-default" href="<? echo Url::to(['post/open', 'id' => $notice->id]) ?>">Открыть</a>
           <?php endif;?>
+            Статус:<?php if($notice->isActive): ?>Активное<?php else: ?> Закрытое<?php endif; ?>
 
         </h2>
         <ul class="list-inline">
@@ -75,18 +75,14 @@ use yii\widgets\LinkPager;
           <li>Категория: <?= $notice->category->title ?></li>
           <li>Город: <?= $notice->city->city ?></li>
         </ul>
-        <p><?= $notice->description ?></p>
-        <div class="col-md-4">
-          <ul class="list-group mt-2">
-            <li class="list-group-item">Статус: <?php if($notice->isActive){ ?>Активное<?php } else {?>Закрытое<?php }?></li>
-            <li class="list-group-item">Цена: <?= $notice->price ?> руб</li>
-            <li class="list-group-item">
-              <img class="post__image" src="/post/<?= $notice->image?>" alt=""/>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
+
+      <div class="col-md-8">
+      <p class="lead"><?= $notice->description ?></p>
+      </div>
+      <h4>Цена: <?= $notice->price ?>руб</h4>
+      <img class="post__image" src="/post/<?= $notice->img?>" alt=""/>
       <? endforeach;?>
   </div>
 <?= LinkPager::widget([

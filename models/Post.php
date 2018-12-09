@@ -23,6 +23,8 @@ use Yii;
 class Post extends \yii\db\ActiveRecord
 {
 
+    public $image;
+
     public static function tableName()
     {
         return 'post';
@@ -39,8 +41,8 @@ class Post extends \yii\db\ActiveRecord
         ['category_id','required','message'=>'Выбрите категорию'],
         ['price','required','message'=>'Укажите цену'],
         ['price','integer','message'=>'Введите только цифры'],
-        ['image','image','extensions'=>'jpg,png,jpeg','message'=>'Выберите фотографию формата jpg, jpeg, png'],
-        ['image','file', 'maxSize' => 1024*1024*10, 'message'=>'Выберите аватарку до 10 Мб.'],
+        ['image','file', 'extensions'=>'jpg,png,jpeg' ,'maxSize' => 1024*1024*10, 'message'=>'Выберите аватарку до 10 Мб.'],
+        ['img','string'],
         [['date'],'date','format'=>'php:Y-m-d H:i:s'],
         ['date','default','value'=>date('Y-m-d H:i:s')],
 
@@ -58,7 +60,7 @@ class Post extends \yii\db\ActiveRecord
         'description' => 'Описание',
         'city_id' => 'Город',
         'price' => 'Цена',
-        'image' => 'Картинка',
+        'image' => '',
         'date' => 'Дата',
         'isActive' => 'Is Active',
 
@@ -89,18 +91,25 @@ class Post extends \yii\db\ActiveRecord
       $post->city_id = $this->city_id;
       $post->price = $this->price;
 
-      return $post->save()? true: false;
+      return $post->save();
     }
 
-    public function updateImage()
+    public function updateImage($image)
     {
-      if($this->validate() && !empty($this->image))
+      if($this->validate())
       {
-        return $this->image->saveAs('post/'.$this->image->baseName. '.' . $this->image->extension);
-
-      }
+          $path = Yii::getAlias( $this->getFolder(). $image->baseName. '.' . $image->extension);
+          if($image->saveAs($path)) {
+            return $image->baseName . '.' . $image->extension;
+          }
+        }
       else{
         return false;
       }
+    }
+
+    public function getFolder()
+    {
+      return Yii::getAlias('@web').'post/' ;
     }
 }

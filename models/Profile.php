@@ -21,6 +21,7 @@ use Yii;
 class Profile extends \yii\db\ActiveRecord
 {
 
+   public $photo;
 
     public static function tableName()
     {
@@ -37,8 +38,9 @@ class Profile extends \yii\db\ActiveRecord
             ['phone','required','message'=>'Укажите свой мобильный телефон'],
             ['city_id','required','message'=>'Укажите свой город'],
             ['description','string'],
-            [['phone'],'integer', 'message'=>'Только 10 цифр'],
+            [['phone'],'integer','message'=>'Только 10 цифр'],
             [['photo'],'file', 'maxSize' => 1024*1024*3,'extensions' => 'png, jpg', 'message'=>'Выберите аватарку до 3 Мб.'],
+            ['img','string'],
             [['dateRegistration'],'date','format'=>'php:Y-m-d H:i:s'],
             ['dateRegistration','default','value'=>date('Y-m-d H:i:s')],
         ];
@@ -53,7 +55,7 @@ class Profile extends \yii\db\ActiveRecord
             'user_id' => 'user_id',
             'name' => 'Имя',
             'city_id' => 'Город',
-            'phone' => ' телефона 7+',
+            'phone' => ' 7+',
             'description' => 'О себе',
             'dateRegistration' => '',
             'photo' => '',
@@ -77,22 +79,18 @@ class Profile extends \yii\db\ActiveRecord
       $profile->city_id = $this->city_id;
       $profile->description = $this->description;
 
-//      if($profile->photo){
-//        $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
-//        $profile->photo->saveAs($path);
-//      }
-
         return $profile->save();
 
     }
 
-
-    public function uploadImage($profile)
+    public function uploadImage($photo)
     {
       if ($this->validate()) {
-        $path = Yii::getAlias($this->getFolder() . $profile->photo->baseName . '.' . $profile->photo->extension);
-        return $profile->photo->saveAs($path);
-
+        $path = Yii::getAlias($this->getFolder() . $photo->baseName . '.' . $photo->extension);
+        if($photo->saveAs($path))
+        {
+           return $photo->baseName . '.' . $photo->extension;
+        }
       }
       else {
         return false;

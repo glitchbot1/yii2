@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use \yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 ?>
   <?php Pjax::begin()?>
@@ -19,18 +20,21 @@ use yii\widgets\Pjax;
   ]) ?>
 
   <div class="main-profile">
-    <h1>Личные данные</h1>
+    <h1 class="text-center">Личные данные</h1>
     <div class="container">
       <div class="row">
         <div class="col-md-2 col-lg-2"></div>
         <div class="col-sm-3 col-md-2 col-lg-2">
-            <?php if ($profile_model->photo) {  ?>
-              <img class="profile__image" src="/image/<?= $profile_model->photo?>" alt="fdg">
-              <?= $form->field($profile_model, 'photo')->fileInput() ?>
-            <?php }  else {  ?>
+            <?php if ($profile_model->img) :  ?>
+              <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['user/delete-image', 'id' => $profile_model->user_id]) ?>"></a>
+              <img class="profile__image" src="/image/<?= $profile_model->img?>" alt="fdg">
+              <label for="input-file"  class="btn btn-success">Изменить</label>
+              <?= $form->field($profile_model, 'photo')->fileInput(['class'=>'uploading-file', 'id'=>'input-file']) ?>
+            <?php else :  ?>
               <img class="profile__image" src="/image/cap.jpg" alt="cap">
-              <?= $form->field($profile_model, 'photo')->fileInput() ?>
-            <?php } ?>
+              <label for="input-file"  class="btn btn-success">Загрузить</label>
+              <?= $form->field($profile_model, 'photo')->fileInput(['class'=>'uploading-file','id'=>'input-file']) ?>
+            <?php endif; ?>
 
 
         </div>
