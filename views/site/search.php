@@ -8,7 +8,7 @@
     <?php } else { ?>
      <?php foreach ($model as $posts):?>
         <div class="col-lg-6 post">
-          <img class="post__image" src="/post/<?= $posts->image?>" alt="Фото">
+          <img class="post__image" src="/post/<?= $posts->img?>" alt="Фото">
           <a  href="<?php echo Yii::$app->urlManager->createUrl(['post/view', 'id' => $posts['id']]); ?>">
             <p><?php echo $posts['title']?> </p></a>
           <p>Цена: <?= $posts->price ?></p>
