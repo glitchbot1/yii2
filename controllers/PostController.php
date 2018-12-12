@@ -23,10 +23,14 @@ class PostController extends Controller
         return [
           'access' =>[
            'class'=>AccessControl::className(),
+//            'only'=> ['update'],
+//            'denyCallback'=> function($rule,$action) {
+//              throw new \Exception('У Вас нет прав редактировать это объявление');
+//           },
            'rules'=>[
               [
                 'allow' => true,
-                'actions' => ['post','notice','update','delete-image','view','open','close'],
+                'actions' => ['post','notice','delete-image','view','open','close','update'],
                 'roles'=>['@'],
               ],
               [
@@ -50,20 +54,16 @@ class PostController extends Controller
         //Загружаем его и проверяем валидацией
         if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()) {
           //Метод загрузки изображения
-          $image = Yii::$app->cache->get('image');
-          if(!$image) {
-
             $image = UploadedFile::getInstance($post_model, 'image');
             if (!is_null($image)) {
 
               $post_model->img = $post_model->updateImage($image);
-              Yii::$app->cache->set('image',$image,3600);
+
             }
-          }
           //вызываем метод создания объявления и загрузки изображения
             if ($post_model->createPost($post_model)) {
             Yii::$app->session->setFlash('success', 'Объявление успешно добавлено');
-
+            $this->redirect(['site/index']);
           }
           else {
 
@@ -156,7 +156,7 @@ class PostController extends Controller
         $notice_model = Post::find()->where(['id' => $id])->all();
         // в $user_id записывает значения столбца user_id
         $user_id = ArrayHelper::getColumn($notice_model, 'user_id');
-        // записываем в переменну  $count_notice количество запсией пользователя
+        // записываем в переменну  $count_notice количество записей пользователя
         $count_notice = Post::find()->where(['user_id'=>$user_id])->count();
         //заносим данные текущего пользователя в переменную $user_model
         $user_model = Profile::find()->where(['user_id' => $user_id])->one();

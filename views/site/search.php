@@ -1,5 +1,4 @@
-
-    <?php if ($search == "") { ?>
+ <?php if ($search == "") { ?>
          <h4> Вы ничего не ввели</h4>
     <?php } else { ?>
         <h4> Результат: <?=$search?></h4>
@@ -7,7 +6,7 @@
         <h4> Ничего не найдено</h4>
     <?php } else { ?>
      <?php foreach ($model as $posts):?>
-        <div class="col-lg-6 post">
+        <div class="col-lg-6 ">
           <img class="post__image" src="/post/<?= $posts->img?>" alt="Фото">
           <a  href="<?php echo Yii::$app->urlManager->createUrl(['post/view', 'id' => $posts['id']]); ?>">
             <p><?php echo $posts['title']?> </p></a>

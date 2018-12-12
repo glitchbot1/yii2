@@ -1,8 +1,11 @@
 <?php
 
 namespace app\models;
+use Faker\Provider\Image;
 use yii\web\UploadedFile;
-
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 use Yii;
 
 /**
@@ -22,6 +25,8 @@ class Profile extends \yii\db\ActiveRecord
 {
 
    public $photo;
+   public $nomer;
+
 
     public static function tableName()
     {
@@ -38,7 +43,8 @@ class Profile extends \yii\db\ActiveRecord
             ['phone','required','message'=>'Укажите свой мобильный телефон'],
             ['city_id','required','message'=>'Укажите свой город'],
             ['description','string'],
-            [['phone'],'integer','message'=>'Только 10 цифр'],
+           // [['phone'],'string','message'=>'Только 10 цифр'],
+            [['nomer'],'string','max'=>10,'message'=>'Длина логина от 6 до 32 символов'],
             [['photo'],'file', 'maxSize' => 1024*1024*3,'extensions' => 'png, jpg', 'message'=>'Выберите аватарку до 3 Мб.'],
             ['img','string'],
             [['dateRegistration'],'date','format'=>'php:Y-m-d H:i:s'],
@@ -62,16 +68,12 @@ class Profile extends \yii\db\ActiveRecord
 
         ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
       return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function updateProfile($profile)
+    public function updateProfile($profile) // Обновления профиля ползователя
     {
       $profile->user_id = Yii::$app->user->id;
       $profile->name = $this->name;
@@ -83,13 +85,17 @@ class Profile extends \yii\db\ActiveRecord
 
     }
 
-    public function uploadImage($photo)
+    public function uploadImage($photo)  //Загрузка картинки
     {
       if ($this->validate()) {
-        $path = Yii::getAlias($this->getFolder() . $photo->baseName . '.' . $photo->extension);
+
+        $filename = strtolower(uniqid($photo->baseName)) . '.' . $photo->extension;
+
+        $path = Yii::getAlias($this->getFolder() . $filename);
         if($photo->saveAs($path))
         {
-           return $photo->baseName . '.' . $photo->extension;
+          \yii\imagine\Image::getImagine()->open($path)->thumbnail(new Box(250,250))->save($path,['quality' => 100]);
+           return $filename;
         }
       }
       else {
@@ -98,15 +104,11 @@ class Profile extends \yii\db\ActiveRecord
     }
 
 
+
     public function getFolder()
     {
       return Yii::getAlias('@web').'image/' ;
     }
 
-
-//    public function fileExist($currentImage)
-//    {
-//      return file_exists($this->getFolder() . $currentImage);
-//    }
 
 }

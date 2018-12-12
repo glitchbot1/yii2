@@ -8,23 +8,13 @@ use yii\helpers\Url;
 <div class="row p-5 bg-info">
   <div class="col-md-6">
     <form action="/site/index" method="get">
-    <select
-      class="btn btn-primary"
-      size="1"
-      name="category"
-      id="category"
-      onchange="this.form.submit()"
-    >
+    <select class="btn btn-primary"  name="category" id="category" onchange="this.form.submit()">
     <option disabled <?php  if (!isset($_GET['category'])) {echo 'selected';}?>>Категория</option>
       <?php foreach ($categories as $category ):?>
         <option <?php  if (isset($_GET['category']) && $_GET['category'] == $category->title) {echo 'selected';}?> value="<?= $category->title?>"> <?= $category->title?> </option>
       <?php endforeach;?>
     </select>
-    <select class="btn btn-primary"
-            size="1"
-            name="city"
-            id="city"
-            onchange="this.form.submit()">
+    <select class="btn btn-primary" name="city" id="city" onchange="this.form.submit()">
       <option disabled <?php  if (!isset($_GET['city'])) {echo 'selected';}?>>Город</option>
       <?php foreach ($cities as $city ):?>
         <option <?php if (isset($_GET['city']) && $_GET['city'] == $city->city) {echo 'selected';}?>  value="<?= $city->city?>"> <?= $city->city?> </option>
@@ -63,7 +53,7 @@ use yii\helpers\Url;
                 <?php if($posts->img){  ?>
                 <img class="post__image" src="/post/<?= $posts->img?>" alt="Фото">
                 <?php } else {  ?>
-                  <img class="post__image" src="/image/no-photo.png" alt="cap">
+                  <img class="post__image" src="/post/no-photo.png" alt="cap">
                 <?php }  ?>
                 <p><?php echo $posts['title']?> </p></a>
                <p>Цена: <?= $posts->price ?></p>

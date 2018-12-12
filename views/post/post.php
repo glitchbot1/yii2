@@ -1,10 +1,12 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-?>
 
+\app\assets\AppAsset::register($this);
+?>
 
   <h1 class="text-center">Добавить объявление</h1>
   <?php if( Yii::$app->session->hasFlash('success') ): ?>
@@ -31,6 +33,12 @@ use yii\helpers\Url;
         <?= $form->field($post_model,'price')->textInput() ?>
         <label for="input-file" class="btn btn-success">Загрузить</label>
         <?= $form->field($post_model,'image')->fileInput(['class'=>'uploading-file', 'id'=>'input-file'])?>
+        <div>
+          <img class="post__image" id="img-preview" src="/post/no-photo.png"/>
+        </div>
+        <div>
+          <input type="reset" class="btn btn-danger" value="Отмена">
+        </div>
         <?= Html::submitButton('Добавить',['class'=> 'btn btn-success button_update_post'])?>
       <?php ActiveForm::end()?>
     </div>

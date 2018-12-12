@@ -67,9 +67,9 @@ use yii\widgets\LinkPager;
           <?php else:?>
             <a class="btn btn-default" href="<? echo Url::to(['post/open', 'id' => $notice->id]) ?>">Открыть</a>
           <?php endif;?>
-            Статус:<?php if($notice->isActive): ?>Активное<?php else: ?> Закрытое<?php endif; ?>
-
+          Статус:<?php if($notice->isActive): ?>Активное<?php else: ?> Закрытое<?php endif; ?>
         </h2>
+
         <ul class="list-inline">
           <li><?= $notice->date ?></li>
           <li>Категория: <?= $notice->category->title ?></li>
@@ -82,7 +82,11 @@ use yii\widgets\LinkPager;
       <p class="lead"><?= $notice->description ?></p>
       </div>
       <h4>Цена: <?= $notice->price ?>руб</h4>
+      <?php if ($notice->img): ?>
       <img class="post__image" src="/post/<?= $notice->img?>" alt=""/>
+      <?php else: ?>
+      <img class="post__image" src="/post/no-photo.png" alt="cap">
+      <?php endif; ?>
       <? endforeach;?>
   </div>
 <?= LinkPager::widget([

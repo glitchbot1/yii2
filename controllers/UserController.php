@@ -49,7 +49,7 @@ class UserController extends Controller
         if ($profile_model->load(Yii::$app->request->post()) && $profile_model->validate()) {
           //Если форма была отправлена, то даные с формы загружаются в объект модели и проверяем на валидногсть
 
-            $photo = UploadedFile::getInstance($profile_model, 'photo');
+          $photo = UploadedFile::getInstance($profile_model, 'photo');
             if(!is_null($photo)) {
               $profile_model->img = $profile_model->uploadImage($photo);
             }

@@ -36,14 +36,13 @@ use yii\helpers\Url;
               <?= $form->field($profile_model, 'photo')->fileInput(['class'=>'uploading-file','id'=>'input-file']) ?>
             <?php endif; ?>
 
-
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
           <?php $items_city = ArrayHelper::map($city,'id','city')?>
           <?php $params = ['prompt'=>'']?>
           <?= $form->field($profile_model,'name') ?>
           <?= $form->field($profile_model,'city_id')->dropDownList($items_city, $params)?>
-          <?= $form->field($profile_model,'phone')->textInput(['maxlength'=>10]) ?>
+          <?= $form->field($profile_model,'nomer')->textInput(['maxlength'=>9]) ?>
           <?= $form->field($profile_model,'description')->textarea(['rows'=>6]) ?>
           <?= Html::submitButton('Сохранить', ['class' => 'profile__btn_save btn btn-primary']) ?>
         </div>
@@ -58,3 +57,4 @@ use yii\helpers\Url;
     <?php endif;?>
   <?php ActiveForm::end()?>
   <?php Pjax::end()?>
+

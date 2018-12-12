@@ -40,7 +40,7 @@ class Post extends \yii\db\ActiveRecord
         ['city_id','required','message'=>'Укажите свой город'],
         ['category_id','required','message'=>'Выбрите категорию'],
         ['price','required','message'=>'Укажите цену'],
-        ['price','integer','message'=>'Введите только цифры'],
+        ['price','integer','message'=>'Введите только целые цифры'],
         ['image','file', 'extensions'=>'jpg,png,jpeg' ,'maxSize' => 1024*1024*10, 'message'=>'Выберите аватарку до 10 Мб.'],
         ['img','string'],
         [['date'],'date','format'=>'php:Y-m-d H:i:s'],
@@ -98,9 +98,10 @@ class Post extends \yii\db\ActiveRecord
     {
       if($this->validate())
       {
-          $path = Yii::getAlias( $this->getFolder(). $image->baseName. '.' . $image->extension);
+        $filename = strtolower(uniqid($image->baseName)) . '.' . $image->extension;
+          $path = Yii::getAlias( $this->getFolder(). $filename );
           if($image->saveAs($path)) {
-            return $image->baseName . '.' . $image->extension;
+            return $filename;
           }
         }
       else{
