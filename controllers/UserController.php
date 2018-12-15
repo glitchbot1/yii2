@@ -103,14 +103,14 @@ class UserController extends Controller
         }
       }
 
-    public function actionDeleteImage($id) // Удаление картинки
+    public function actionDeleteImageProfile($id) // Удаление картинки
     {
       $delete = Profile::findOne($id);
       $file_name = $delete->img;
       //var_dump($file_name);
-      if(file_exists($file_path = Yii::getAlias('@web').'post/'. $file_name))
+      if(file_exists($file_path = Yii::getAlias('@web').'uploads/image_profile/'. $file_name))
       {
-        unlink(Yii::getAlias('@web').'post/'.$file_name);
+        unlink(Yii::getAlias('@web').'uploads/image_profile/'.$file_name);
       }
       if($delete)
       {

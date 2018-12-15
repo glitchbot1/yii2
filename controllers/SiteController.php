@@ -10,7 +10,7 @@ use app\models\SiteSearch;
 use app\models\Category;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
-use yii\web\NotFoundHttpException;
+
 
 class SiteController extends Controller
 {

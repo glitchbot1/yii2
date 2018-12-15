@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
 
 AppAsset::register($this);
 ?>
@@ -20,60 +21,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-
-<div class="wrap">
-    <nav class="navbar navbar-collapse ">
-    <div class = "nav navbar-nav navbar-right ">
-
-
-        <?php if(Yii::$app->user->isGuest):?>
-          <div class="navbar-brand mb-0 h1"> <a href="<?= Url::toRoute(['/site/index'])?>">На главную</a></div>
-          <div class="navbar-brand mb-0 h1"> <a href="<?= Url::toRoute(['/user/login'])?>">Авторизация</a></div>
-
-          <div class="navbar-brand mb-0 h1"><a href="<?= Url::toRoute(['/user/signup'])?>">Регистрация</a></div>
-        <?php else: ?>
-          <li>
-            <?= Html::beginForm(['/site/index'], 'post')
-            . Html::submitButton(
-              'Домой',
-              ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
-            )
-            . Html::endForm() ?>
-          </li>
-          <li>
-            <?= Html::beginForm(['/post/post'], 'post')
-            . Html::submitButton(
-              'Добавить объявление',
-              ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
-            )
-            . Html::endForm() ?>
-          </li>
-          <li>
-            <?= Html::beginForm(['/post/notice'], 'post')
-            . Html::submitButton(
-              'Мои объявления',
-              ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
-            )
-            . Html::endForm() ?>
-          </li>
-        <li>
-            <?= Html::beginForm(['/user/profile'], 'post')
-            . Html::submitButton(
-                'Личный кабинет',
-                ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
-            )
-            . Html::endForm() ?>
-        </li>
-        <li>
-            <?= Html::beginForm(['/user/logout'], 'post')
-                . Html::submitButton(
-                        'Выйти (' . Yii::$app->user->identity->email . ')',
-                        ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"])
-            . Html::endForm() ?>
-        </li>
-        <?php endif;?>
-    </div>
-    </nav>
+<?= app\components\NavBarWidget::widget()?>
 
     <div class="container">
         <?= Breadcrumbs::widget([

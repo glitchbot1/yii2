@@ -115,7 +115,7 @@ a.desc:after {
 }
 
 .profile__image {
-    width: 150px;
+    width: 180px;
     border-radius: 10px;
     min-width: 100%;
 }
@@ -142,7 +142,21 @@ a.desc:after {
 
 .post__image{
     width: 300px;
-    
+
+}
+.panel-default {
+    border-color: #ddd;
+    float: right;
+}
+.post-border {
+    width: 380px;
+    padding-left: 50px;
+    padding-top: 20px;
+}
+.post-border:hover {
+    border: 2px solid silver;
+    border-radius: 40px;
+
 }
 .uploading-file{
   display: none !important;
@@ -160,6 +174,26 @@ a.desc:after {
 }
 textarea.form-control{
   resize: none !important;
+}
+.rule_post_image {
+    width: 330px;
+    padding-left: 100px;
+}
+.p_text_image {
+    margin: -37px 0 10px
+}
+.title_view {
+    font-size: 20px;
+}
+.main-menu {
+    display: inline;
+    color:red;
+}
+.navbar-collapse {
+    background-color:#d9edf7;
+}
+.title-index {
+    color: black;
 }
 
 

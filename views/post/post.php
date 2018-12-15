@@ -32,9 +32,12 @@ use yii\helpers\Url;
         <?= $form->field($post_model,'city_id')->dropDownList($items_city,$params)?>
         <?= $form->field($post_model,'price')->textInput() ?>
         <label for="input-file" class="btn btn-success">Загрузить</label>
+        <div class="rule_post_image">
+        <p class="p_text_image">Вы можете загрузить фотографию в формате jpeg, jpg, png и весом не более 10 Мб</p>
+        </div>
         <?= $form->field($post_model,'image')->fileInput(['class'=>'uploading-file', 'id'=>'input-file'])?>
         <div>
-          <img class="post__image" id="img-preview" src="/post/no-photo.png"/>
+          <img class="post__image" id="img-preview" src="<?= Url::toRoute(['uploads/image_post/no-photo.png'])?>"/>
         </div>
         <div>
           <input type="reset" class="btn btn-danger" value="Отмена">

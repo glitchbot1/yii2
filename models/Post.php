@@ -35,14 +35,15 @@ class Post extends \yii\db\ActiveRecord
     {
       return [
         ['isActive','boolean'],
-        ['title','required','message'=>'Заполните заголовок объявления'],
-        ['description','required','message'=>'Заполните описание объявления'],
-        ['city_id','required','message'=>'Укажите свой город'],
-        ['category_id','required','message'=>'Выбрите категорию'],
-        ['price','required','message'=>'Укажите цену'],
+        [['title'],'required','message'=>'Заполните заголовок объявления'],
+        [['description'],'required','message'=>'Заполните описание объявления'],
+        [['city_id'],'required','message'=>'Укажите свой город'],
+        [['category_id'],'required','message'=>'Выбрите категорию'],
+        [['price'],'required','message'=>'Укажите цену'],
         ['price','integer','message'=>'Введите только целые цифры'],
-        ['image','file', 'extensions'=>'jpg,png,jpeg' ,'maxSize' => 1024*1024*10, 'message'=>'Выберите аватарку до 10 Мб.'],
-        ['img','string'],
+        ['image','file', 'extensions'=>'jpg,png,jpeg'],
+        ['image','file', 'maxSize'=>1024*1024*10],
+        ['img','string',],
         [['date'],'date','format'=>'php:Y-m-d H:i:s'],
         ['date','default','value'=>date('Y-m-d H:i:s')],
 
@@ -111,6 +112,6 @@ class Post extends \yii\db\ActiveRecord
 
     public function getFolder()
     {
-      return Yii::getAlias('@web').'post/' ;
+      return Yii::getAlias('@web').'uploads/post_image/' ;
     }
 }

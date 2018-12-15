@@ -4,7 +4,6 @@ use yii\widgets\LinkPager;
 use yii\helpers\Url;
 \app\assets\SiteAsset::register($this);
 ?>
-
 <div class="row p-5 bg-info">
   <div class="col-md-6">
     <form action="/site/index" method="get">
@@ -19,7 +18,6 @@ use yii\helpers\Url;
       <?php foreach ($cities as $city ):?>
         <option <?php if (isset($_GET['city']) && $_GET['city'] == $city->city) {echo 'selected';}?>  value="<?= $city->city?>"> <?= $city->city?> </option>
       <?php endforeach;?>
-
     </select>
     </form>
   </div>
@@ -28,12 +26,7 @@ use yii\helpers\Url;
       <div class="form-group">
         <label for="searchField" class="sr-only"></label>
         <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            id="searchField"
-            placeholder="Search..."
-            name="search"
+          <input type="text" class="form-control" id="searchField" placeholder="Поиск..." name="search"
           />
         </div>
       </div>
@@ -49,16 +42,18 @@ use yii\helpers\Url;
   <div class="row">
     <?php foreach ($model as $posts): ?>
           <div class="col-md-6">
-            <a  href="<?php echo Yii::$app->urlManager->createUrl(['post/view', 'id' => $posts['id']]); ?>">
-                <?php if($posts->img){  ?>
-                <img class="post__image" src="/post/<?= $posts->img?>" alt="Фото">
-                <?php } else {  ?>
-                  <img class="post__image" src="/post/no-photo.png" alt="cap">
-                <?php }  ?>
-                <p><?php echo $posts['title']?> </p></a>
+            <div class="post-border">
+            <a style="text-decoration: none;" href="<?php echo Yii::$app->urlManager->createUrl(['post/view', 'id' => $posts['id']]); ?>">
+                <?php if($posts->img):  ?>
+                <img class="post__image" src="<?= Url::toRoute(['uploads/image_post/'.$posts->img])?>" alt="Фото">
+                <? else:  ?>
+                  <img class="post__image" src="<?= Url::toRoute(['uploads/image_post/no-photo.png'])?>" alt="cap">
+                <?php endif;  ?>
+                <p class="title-index"><?= $posts->title?> </p></a>
                <p>Цена: <?= $posts->price ?></p>
                <p><?= $posts->date ?></p>
-              </div>
+          </div>
+    </div>
     <? endforeach;?>
   </div>
   <?= LinkPager::widget([

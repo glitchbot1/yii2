@@ -25,7 +25,7 @@ class Profile extends \yii\db\ActiveRecord
 {
 
    public $photo;
-   public $nomer;
+
 
 
     public static function tableName()
@@ -39,13 +39,14 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['name','required','message'=>'Заполните имя'],
-            ['phone','required','message'=>'Укажите свой мобильный телефон'],
-            ['city_id','required','message'=>'Укажите свой город'],
+            [['name'],'required','message'=>'Заполните имя'],
+            [['phone'],'required','message'=>'Укажите свой мобильный телефон'],
+            [['city_id'],'required','message'=>'Укажите свой город'],
             ['description','string'],
-           // [['phone'],'string','message'=>'Только 10 цифр'],
-            [['nomer'],'string','max'=>10,'message'=>'Длина логина от 6 до 32 символов'],
-            [['photo'],'file', 'maxSize' => 1024*1024*3,'extensions' => 'png, jpg', 'message'=>'Выберите аватарку до 3 Мб.'],
+            [['phone'], 'string', 'length' => [10]],
+            ['phone','number','message'=>'В номере должны быть только цифры'],
+            ['photo','file','extensions' => 'png, jpg'],
+            ['photo','file', 'maxSize' => 1024*1024*3,],
             ['img','string'],
             [['dateRegistration'],'date','format'=>'php:Y-m-d H:i:s'],
             ['dateRegistration','default','value'=>date('Y-m-d H:i:s')],
@@ -94,7 +95,6 @@ class Profile extends \yii\db\ActiveRecord
         $path = Yii::getAlias($this->getFolder() . $filename);
         if($photo->saveAs($path))
         {
-          \yii\imagine\Image::getImagine()->open($path)->thumbnail(new Box(250,250))->save($path,['quality' => 100]);
            return $filename;
         }
       }
@@ -107,7 +107,7 @@ class Profile extends \yii\db\ActiveRecord
 
     public function getFolder()
     {
-      return Yii::getAlias('@web').'image/' ;
+      return Yii::getAlias('@web').'uploads/image_profile/' ;
     }
 
 

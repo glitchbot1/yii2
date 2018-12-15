@@ -1,54 +1,41 @@
 
 <?php
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-use yii\bootstrap\Modal;
-use \yii\helpers\ArrayHelper;
-use app\models\City;
-use app\models\Category;
 use yii\widgets\LinkPager;
 ?>
     <h1 class="text-center">Мои объявления</h1>
-      <div class="col-md-6">
-        <select onchange="window.location.search += 'category=' + this.options[this.selectedIndex].value + '&'"
-          class="btn btn-primary"
-          size="1"
-          name="category"
-          id="category">
-          <option disabled selected>Категория</option>
-          <?php foreach ($categories as $category ):?>
-            <option value="<?= $category->title?>"> <?= $category->title?> </option>
-          <?php endforeach;?>
-        </select>
-        <select onchange="window.location.search += 'status=' + this.options[this.selectedIndex].value + '&'"
-          class="btn btn-primary"
-          size="1" name="city"
-          id="city">>
-          <option disabled selected>Статус</option>
-          <option value="active">Активное</option>
-          <option value="close">Закрытое</option>
-        </select>
-      </div>
-    <div class="col-md-4 pull-right">
-      <form action="<?= Url::to(['/site/search']) ?>" class="form-inline">
-        <div class="form-group">
-          <label for="searchField" class="sr-only"></label>
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              id="searchField"
-              placeholder="Search..."
-              name="search"
-            />
-          </div>
+<div class="row p-5 bg-info">
+  <div class="col-md-6">
+    <form action="/post/notice" method="get">
+      <select class="btn btn-primary"  name="category" id="category" onchange="this.form.submit()">
+        <option disabled <?php  if (!isset($_GET['category'])) {echo 'selected';}?>>Категория</option>
+        <?php foreach ($categories as $category ):?>
+          <option <?php  if (isset($_GET['category']) && $_GET['category'] == $category->title) {echo 'selected';}?> value="<?= $category->title?>"> <?= $category->title?> </option>
+        <?php endforeach;?>
+      </select>
+      <select onchange="this.form.submit()"
+              class="btn btn-primary" name="status" id="status">>
+        <option disabled selected>Статус</option>
+        <option value="active">Активное</option>
+        <option value="close">Закрытое</option>
+      </select>
+    </form>
+  </div>
+  <div class="col-md-4 pull-right">
+    <form action="<?= Url::to(['/site/search']) ?>" class="form-inline">
+      <div class="form-group">
+        <label for="searchField" class="sr-only"></label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="searchField" placeholder="Поиск..." name="search"
+          />
         </div>
-        <button class="btn btn-success" type="submit">
-          <span class="glyphicon glyphicon-search"></span>
-        </button>
-      </form>
-    </div>
-    </div>
+      </div>
+      <button class="btn btn-success" type="submit">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </form>
+  </div>
+</div>
   <div class="container">
     <?php if( Yii::$app->session->hasFlash('success') ): ?>
       <div class="alert alert-success alert-dismissible" role="alert">
@@ -83,9 +70,9 @@ use yii\widgets\LinkPager;
       </div>
       <h4>Цена: <?= $notice->price ?>руб</h4>
       <?php if ($notice->img): ?>
-      <img class="post__image" src="/post/<?= $notice->img?>" alt=""/>
+      <img class="post__image" src="<?= Url::toRoute(['uploads/image_post/'.$notice->img])?>" alt=""/>
       <?php else: ?>
-      <img class="post__image" src="/post/no-photo.png" alt="cap">
+      <img class="post__image" src="<?= Url::toRoute(['uploads/image_post/no-photo.png'])?>" alt="cap">
       <?php endif; ?>
       <? endforeach;?>
   </div>

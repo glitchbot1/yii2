@@ -55,6 +55,7 @@ class PostController extends Controller
         if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()) {
           //Метод загрузки изображения
             $image = UploadedFile::getInstance($post_model, 'image');
+
             if (!is_null($image)) {
 
               $post_model->img = $post_model->updateImage($image);
@@ -88,14 +89,27 @@ class PostController extends Controller
           }
 
           if (isset($_GET['status']) && $_GET['status'] == 'active') {
+
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id,'isActive' => true] );
+
           }
 
           if (isset($_GET['status']) && $_GET['status'] == 'close') {
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id,'isActive' => false] );
+
+          }
+          if(isset($_GET['category']) && isset($_GET['status']) && $_GET['status'] == 'active') {
+            $category = Category::find()->where(['title'=>$_GET['category']])->all();
+            $cat_id = ArrayHelper::getColumn($category,'id');
+            $my_posts = Post::find()->where(['category_id'=>$cat_id,'isActive' => true]);
+          }
+          if(isset($_GET['category']) && isset($_GET['status']) && $_GET['status'] == 'false') {
+            $category = Category::find()->where(['title'=>$_GET['category']])->all();
+            $cat_id = ArrayHelper::getColumn($category,'id');
+            $my_posts = Post::find()->where(['category_id'=>$cat_id,'isActive' => false]);
           }
 
-          if (!isset($_GET['status'])) {
+          if (!isset($_GET['status']) && !isset($_GET['category'])) {
             $my_posts = Post::find()->where(['user_id'=>Yii::$app->user->id] );
           }
 
@@ -135,9 +149,9 @@ class PostController extends Controller
      $delete = Post::findOne($id);
      $file_name = $delete->img;
      //var_dump($file_name);
-       if(file_exists($file_path = Yii::getAlias('@web').'post/'. $file_name))
+       if(file_exists($file_path = Yii::getAlias('@web').'uploads/image_post/'. $file_name))
        {
-         unlink(Yii::getAlias('@web').'post/'.$file_name);
+         unlink(Yii::getAlias('@web').'uploads/image_post/'.$file_name);
        }
        if($delete)
        {

@@ -9,12 +9,6 @@ nbproject
 .project
 .settings
 
-# sublime text project / workspace files
-*.sublime-project
-*.sublime-workspace
-
-# visual studio code project files
-.vscode
 
 # windows thumbnail cache
 Thumbs.db

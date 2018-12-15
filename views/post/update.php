@@ -17,10 +17,17 @@
         <?= $form->field($update_model,'city_id')->dropDownList(ArrayHelper::map(\app\models\City::find()->all(), 'id','city'))?>
         <?= $form->field($update_model,'price')->textInput() ?>
         <div class="img_wrapper">
-          <img class="post__image " src="/post/<?= $update_model->img?>" alt="image">
-          <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['post/delete-image', 'id' => $update_model->id]) ?>"></a>
         </div>
         <label for="input-file"  class="btn btn-success">Загрузить</label>
+        <div class="rule_post_image">
+          <p class="p_text_image">Вы можете загрузить фотографию в формате jpeg, jpg, png и весом не более 10 Мб</p>
+        </div>
+        <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['post/delete-image', 'id' => $update_model->id]) ?>"></a>
+        <?php if($update_model->img): ?>
+          <img class="post__image " src="<?= Url::toRoute(['uploads/image_post/'.$update_model->img])?>" alt="image">
+        <?php else: ?>
+          <img class="post_image" src="<?= Url::to(['/uploads/image_post/no-photo.png','id' => $update_model->id])?>" alt="no-photo">
+        <?php endif; ?>
         <?= $form->field($update_model,'image')->fileInput(['class'=>'uploading-file', 'id'=>'input-file'])?>
         <?= Html::submitButton('Сохранить изменения ',['class'=> 'btn btn-success button_update_post'])?>
       <?php ActiveForm::end()?>
