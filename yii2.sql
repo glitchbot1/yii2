@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.4.15
 -- Dumped by pg_dump version 9.4.15
--- Started on 2018-11-23 23:10:58
+-- Started on 2018-12-13 22:22:05
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -157,7 +157,7 @@ CREATE TABLE post (
     category_id integer,
     city_id integer,
     "isActive" boolean DEFAULT true,
-    image character varying(255)
+    img character varying(255)
 );
 
 
@@ -199,7 +199,7 @@ CREATE TABLE profile (
     phone bigint,
     description text,
     "dateRegistration" timestamp without time zone,
-    photo character varying(255)
+    img character varying(255)
 );
 
 
@@ -314,12 +314,12 @@ ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regcl
 -- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO category VALUES (1, 'Автомобили');
-INSERT INTO category VALUES (2, 'Недвижимость');
-INSERT INTO category VALUES (3, 'Личные вещи');
-INSERT INTO category VALUES (4, 'Животные');
-INSERT INTO category VALUES (5, 'Бытовая техника');
-INSERT INTO category VALUES (6, 'Услуги');
+INSERT INTO category (id, title) VALUES (1, 'Автомобили');
+INSERT INTO category (id, title) VALUES (2, 'Недвижимость');
+INSERT INTO category (id, title) VALUES (3, 'Личные вещи');
+INSERT INTO category (id, title) VALUES (4, 'Животные');
+INSERT INTO category (id, title) VALUES (5, 'Бытовая техника');
+INSERT INTO category (id, title) VALUES (6, 'Услуги');
 
 
 --
@@ -337,13 +337,13 @@ SELECT pg_catalog.setval('category_id_seq', 6, true);
 -- Data for Name: city; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO city VALUES (1, 'Томск');
-INSERT INTO city VALUES (2, 'Новосибирск');
-INSERT INTO city VALUES (3, 'Омск');
-INSERT INTO city VALUES (4, 'Кемерово');
-INSERT INTO city VALUES (5, 'Абакан');
-INSERT INTO city VALUES (6, 'Иркутск');
-INSERT INTO city VALUES (7, 'Барнаул');
+INSERT INTO city (id, city) VALUES (1, 'Томск');
+INSERT INTO city (id, city) VALUES (2, 'Новосибирск');
+INSERT INTO city (id, city) VALUES (3, 'Омск');
+INSERT INTO city (id, city) VALUES (4, 'Кемерово');
+INSERT INTO city (id, city) VALUES (5, 'Абакан');
+INSERT INTO city (id, city) VALUES (6, 'Иркутск');
+INSERT INTO city (id, city) VALUES (7, 'Барнаул');
 
 
 --
@@ -361,25 +361,25 @@ SELECT pg_catalog.setval('city_id_seq', 7, true);
 -- Data for Name: migration; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO migration VALUES ('m000000_000000_base', 1541771328);
-INSERT INTO migration VALUES ('m181109_125242_create_user_table', 1541771330);
-INSERT INTO migration VALUES ('m181109_125253_create_post_table', 1541771330);
-INSERT INTO migration VALUES ('m181109_134234_create_category_table', 1541771330);
-INSERT INTO migration VALUES ('m181109_142438_create_post_table', 1541773493);
-INSERT INTO migration VALUES ('m181111_020852_create_city_table', 1541902267);
-INSERT INTO migration VALUES ('m181112_110103_create_user_table', 1542036844);
-INSERT INTO migration VALUES ('m181112_110115_create_profile_table', 1542036844);
-INSERT INTO migration VALUES ('m181112_160004_create_profile_table', 1542038599);
-INSERT INTO migration VALUES ('m181112_161744_create_user_table', 1542039545);
-INSERT INTO migration VALUES ('m181112_161948_create_profile_table', 1542039777);
-INSERT INTO migration VALUES ('m181112_162611_create_profile_table', 1542040027);
-INSERT INTO migration VALUES ('m181114_150841_create_profile_table', 1542208177);
-INSERT INTO migration VALUES ('m181114_154040_create_profile_table', 1542210106);
-INSERT INTO migration VALUES ('m181116_143236_create_post_table', 1542378815);
-INSERT INTO migration VALUES ('m181118_041950_create_post_table', 1542514875);
-INSERT INTO migration VALUES ('m181118_041951_create_post_table', 1542516154);
-INSERT INTO migration VALUES ('m181118_041952_create_post_table', 1542516920);
-INSERT INTO migration VALUES ('m181118_041953_create_post_table', 1542519832);
+INSERT INTO migration (version, apply_time) VALUES ('m000000_000000_base', 1541771328);
+INSERT INTO migration (version, apply_time) VALUES ('m181109_125242_create_user_table', 1541771330);
+INSERT INTO migration (version, apply_time) VALUES ('m181109_125253_create_post_table', 1541771330);
+INSERT INTO migration (version, apply_time) VALUES ('m181109_134234_create_category_table', 1541771330);
+INSERT INTO migration (version, apply_time) VALUES ('m181109_142438_create_post_table', 1541773493);
+INSERT INTO migration (version, apply_time) VALUES ('m181111_020852_create_city_table', 1541902267);
+INSERT INTO migration (version, apply_time) VALUES ('m181112_110103_create_user_table', 1542036844);
+INSERT INTO migration (version, apply_time) VALUES ('m181112_110115_create_profile_table', 1542036844);
+INSERT INTO migration (version, apply_time) VALUES ('m181112_160004_create_profile_table', 1542038599);
+INSERT INTO migration (version, apply_time) VALUES ('m181112_161744_create_user_table', 1542039545);
+INSERT INTO migration (version, apply_time) VALUES ('m181112_161948_create_profile_table', 1542039777);
+INSERT INTO migration (version, apply_time) VALUES ('m181112_162611_create_profile_table', 1542040027);
+INSERT INTO migration (version, apply_time) VALUES ('m181114_150841_create_profile_table', 1542208177);
+INSERT INTO migration (version, apply_time) VALUES ('m181114_154040_create_profile_table', 1542210106);
+INSERT INTO migration (version, apply_time) VALUES ('m181116_143236_create_post_table', 1542378815);
+INSERT INTO migration (version, apply_time) VALUES ('m181118_041950_create_post_table', 1542514875);
+INSERT INTO migration (version, apply_time) VALUES ('m181118_041951_create_post_table', 1542516154);
+INSERT INTO migration (version, apply_time) VALUES ('m181118_041952_create_post_table', 1542516920);
+INSERT INTO migration (version, apply_time) VALUES ('m181118_041953_create_post_table', 1542519832);
 
 
 --
@@ -388,30 +388,38 @@ INSERT INTO migration VALUES ('m181118_041953_create_post_table', 1542519832);
 -- Data for Name: post; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO post VALUES (1, 1, 'Продам котенка', 'Продам красивого белого котенка.', '2018-11-20 18:47:12', 1500, 4, 1, true, '1541257167620.jpg');
-INSERT INTO post VALUES (7, 1, 'Продам ноутбук', 'Заряд батареи держит плохо! От сети работает нормально! Комплект ноутбук зарядка и мышь!', '2018-11-23 05:50:10', 4000, 1, 5, true, 'd2133e45.jpg');
-INSERT INTO post VALUES (13, 4, 'Продам шапку', 'В отличном состоянии!
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (13, 4, 'Продам шапку', 'В отличном состоянии!
 Всё находится в Кемерово!', '2018-11-23 06:04:01', 1500, 3, 4, true, 'dpgm0002036b.jpeg');
-INSERT INTO post VALUES (14, 9, 'Мастер по установке, ремонту пластиковых окон', 'Установка окон под ключ,регулировка,ремонт,замена фурнитуры и стеклопакета. изготовление и установка москитных сеток.Все вопросы по телефону, на смс не отвечаю', '2018-11-23 18:23:05', 1000, 3, 5, true, '3549923236.jpg');
-INSERT INTO post VALUES (15, 9, 'Продам кошечку', 'Породистая', '2018-11-23 18:25:40', 10000, 4, 6, true, '15_main.jpg');
-INSERT INTO post VALUES (2, 1, 'Продам квартиру', 'Продам квартиру срочно!', '2018-11-20 18:54:29', 340000000, 2, 1, true, '754909586036514.jpg');
-INSERT INTO post VALUES (3, 2, 'Продам стиральную машинку', 'Быстрое освежение слабозагрязненного белья с помощью программы «Супербыстрая 30’/15’».
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (2, 1, 'Продам квартиру', 'Продам квартиру срочно!', '2018-11-20 18:54:29', 340000000, 2, 1, true, '754909586036514.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (4, 3, 'Продам автомобиль! Срочно', 'Синий,классный автомобиль. Продам недорого, только Барнаул,просьба после 19 не беспокоить', '2018-11-21 10:56:19', 20000000, 1, 7, true, 'audi.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (5, 4, 'Рублю дерgh', 'На рублю дров за вас всего 300р в час.dfgdfg', '2018-11-21 11:07:44', 500, 6, 1, true, '1510512371082.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (6, 4, 'Демонтаж любой сложности', 'Демонтируем различные перегородки, стены, дверные проемы, ниши, кафельную плитку и т.д. Утепляем балконы. Мелкосрочный ремонт по электрике. Работаем быстро, качественно, не пьем не курим. Цены адекватные!', '2018-11-21 11:15:40', 1000, 1, 5, true, '4936603391.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (11, 4, 'Продам кроссовки', 'Продам кроссовки Nike air max (оригинал) в хорошем состоянии, размер 38', '2018-11-23 06:01:15', 4000, 3, 2, true, '1cde0a0c.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (12, 4, 'Продам куртку', 'Куртка из экокожи, состояние идеальное, цвет непонятный (серый хаки), кожа очень мягкая, рукав и низ куртки на резинке из гофрированной кожи, справа на груди выдавленная надпись. Железный замок до конца капюшона и на карманах. ', '2018-11-23 06:02:20', 12000, 3, 7, true, '1019456312.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (8, 1, 'Продам часы', 'Новые Часы с керамическом браслетом ,на гарантии . Покупала за 5490,отдам за 3000р. Коробка и пакет оригинальный ) продажа в связи с покупкой часов apple', '2018-11-23 05:52:49', 3000, 1, 1, true, 'f89e0d94764731a5ed2fbb5062e3ff7e.jpeg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (7, 1, 'Продам ноутбук', 'Заряд батареи держит плохо! От сети работает нормально! Комплект ноутбук зарядка и мышь!', '2018-11-23 05:50:10', 4000, 1, 5, false, 'd2133e45.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (21, 5, 'Продам свинку', 'Продам поросят ,находятся они в ст Баклановская', '2018-11-23 18:39:14', 2340, 4, 4, true, '14452883-cute-pig-.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (17, 5, 'Продам.', 'Собственная парковка 1000м.кв. ', '2018-11-23 18:32:02', 25500000, 2, 2, true, 'cf0.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (18, 5, 'Участок 1.2 га.', 'База 1,2 Гектара. Ангар 1000 кВ, небольшой домик на территории, вода, свет. Адрес Ракитная 3. Торг. Обмен.', '2018-11-23 18:33:29', 15000000, 1, 2, true, 'imagessss (1).jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (20, 5, 'Продам кошку', 'Красивая кошечка в добрые руки , возраст около 2 лет, к лотку приучена . Очень ласковая.', '2018-11-23 18:36:58', 17900, 4, 1, true, 'sterilizacia-koshki.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (25, 2, 'Продам кота', 'Зовут Том в комплекте идет Джерри.', '2018-11-24 17:51:29', 3240, 1, 5, true, '1541277430913.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (1, 1, 'Продам котенка', 'Продам красивого белого котенка.', '2018-11-20 18:47:12', 1500, 4, 1, true, '1541257167620.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (14, 5, 'Мастер по установке, ремонту пластиковых окон', 'Установка окон под ключ,регулировка,ремонт,замена фурнитуры и стеклопакета. изготовление и установка москитных сеток.Все вопросы по телефону, на смс не отвечаю', '2018-11-23 18:23:05', 1000, 3, 5, true, '3549923236.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (15, 5, 'Продам кошечку', 'Породистая', '2018-11-23 18:25:40', 10000, 4, 6, false, '15_main.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (19, 5, 'Продам квартиру', 'Однокомнатная квартира в 76 позиции. Ремонт будет готов через три дня. Незагороженный домами вид из окон. Налево санузел и кухня, направо комната. ', '2018-11-23 18:35:10', 1790000, 2, 1, true, 'ls3a0918.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (16, 5, 'Продам автомобиль', 'Продаю мазду в отличном для своих лет состоянии. Мотор коробка без вложений. Мотор масло не ест. Кондиционер заправлен и работает.', '2018-11-23 18:28:51', 50000000, 1, 7, false, 'images.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (33, 1, 'Продам автомобиль', 'sdfg', '2018-12-08 06:10:09', 50000000, 2, 4, true, '1541277431039.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (40, 1, 'Продам', 'hfjfhjfhjfhjhjhjh
+hjhgjgjhjhghgfh
+', '2018-12-09 20:55:07', 564, 3, 1, true, NULL);
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (3, 2, 'Продам стиральную машинку', 'Быстрое освежение слабозагрязненного белья с помощью программы «Супербыстрая 30’/15’».
 Превосходный результат за меньшее время: функция SpeedPerfect сокращает продолжительность программы за счет увеличения расхода воды и интенсивности вращения барабана.
-Защита от перепадов напряжения и перебоев с электричеством: с системой VoltCheck, программа стирки продолжится автоматически после восстановления электричества.', '2018-11-21 10:37:12', 30000, 5, 4, true, '20036718b.jpg');
-INSERT INTO post VALUES (4, 3, 'Продам автомобиль! Срочно', 'Синий,классный автомобиль. Продам недорого, только Барнаул,просьба после 19 не беспокоить', '2018-11-21 10:56:19', 20000000, 1, 7, true, 'audi.jpg');
-INSERT INTO post VALUES (5, 4, 'Рублю дерgh', 'На рублю дров за вас всего 300р в час.dfgdfg', '2018-11-21 11:07:44', 500, 6, 1, true, '1510512371082.jpg');
-INSERT INTO post VALUES (6, 4, 'Демонтаж любой сложности', 'Демонтируем различные перегородки, стены, дверные проемы, ниши, кафельную плитку и т.д. Утепляем балконы. Мелкосрочный ремонт по электрике. Работаем быстро, качественно, не пьем не курим. Цены адекватные!', '2018-11-21 11:15:40', 1000, 1, 5, true, '4936603391.jpg');
-INSERT INTO post VALUES (8, 1, 'Продам часы', 'Новые Часы с керамическом браслетом ,на гарантии . Покупала за 5490,отдам за 3000р. Коробка и пакет оригинальный ) продажа в связи с покупкой часов apple', '2018-11-23 05:52:49', 3000, 1, 1, true, 'f89e0d94764731a5ed2fbb5062e3ff7e.jpeg');
-INSERT INTO post VALUES (9, 1, 'Продам часы', 'Часы в хорошем состояние без преувеличений, приобрёл их в августе 2017 года, имеется доп ремешок на 42 мм, коробка , зарядное устройство емеются, не носил на протяжении всего лета и до сегодняшнего дня так как купили новые.', '2018-11-23 05:57:19', 5000, 3, 4, true, 'Часы-2.jpg');
-INSERT INTO post VALUES (10, 1, 'Продам автомобиль', 'Автомобиль в хорошем состоянии. «Сел и поехал» на зимних колёсах . Комплектация Спорт. Звоните, отвечу на все вопросы.Автомобиль Японской сборки.', '2018-11-23 05:57:57', 5000000, 1, 1, true, 'RYAAAgJFkOA-960.jpg');
-INSERT INTO post VALUES (11, 4, 'Продам кроссовки', 'Продам кроссовки Nike air max (оригинал) в хорошем состоянии, размер 38', '2018-11-23 06:01:15', 4000, 3, 2, true, '1cde0a0c.jpg');
-INSERT INTO post VALUES (12, 4, 'Продам куртку', 'Куртка из экокожи, состояние идеальное, цвет непонятный (серый хаки), кожа очень мягкая, рукав и низ куртки на резинке из гофрированной кожи, справа на груди выдавленная надпись. Железный замок до конца капюшона и на карманах. ', '2018-11-23 06:02:20', 12000, 3, 7, true, '1019456312.jpg');
-INSERT INTO post VALUES (16, 9, 'Продам автомобиль', 'Продаю мазду в отличном для своих лет состоянии. Мотор коробка без вложений. Мотор масло не ест. Кондиционер заправлен и работает.', '2018-11-23 18:28:51', 50000000, 1, 7, true, 'images.jpg');
-INSERT INTO post VALUES (17, 9, 'Продам.', 'Собственная парковка 1000м.кв. ', '2018-11-23 18:32:02', 25500000, 2, 2, true, 'cf0.jpg');
-INSERT INTO post VALUES (18, 9, 'Участок 1.2 га.', 'База 1,2 Гектара. Ангар 1000 кВ, небольшой домик на территории, вода, свет. Адрес Ракитная 3. Торг. Обмен.', '2018-11-23 18:33:29', 15000000, 1, 2, true, 'imagessss (1).jpg');
-INSERT INTO post VALUES (19, 9, 'Продам квартиру', 'Однокомнатная квартира в 76 позиции. Ремонт будет готов через три дня. Незагороженный домами вид из окон. Налево санузел и кухня, направо комната. ', '2018-11-23 18:35:10', 1790000, 2, 1, true, 'ls3a0918.jpg');
-INSERT INTO post VALUES (20, 9, 'Продам кошку', 'Красивая кошечка в добрые руки , возраст около 2 лет, к лотку приучена . Очень ласковая.', '2018-11-23 18:36:58', 17900, 4, 1, true, 'sterilizacia-koshki.jpg');
-INSERT INTO post VALUES (21, 9, 'Продам свинку', 'Продам поросят ,находятся они в ст Баклановская', '2018-11-23 18:39:14', 2340, 4, 4, true, '14452883-cute-pig-.jpg');
+Защита от перепадов напряжения и перебоев с электричеством: с системой VoltCheck, программа стирки продолжится автоматически после восстановления электричества.', '2018-11-21 10:37:12', 30000, 5, 4, false, '20036718b.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (41, 1, 'Продам автомобиль', 'автомобиль', '2018-12-12 06:13:19', 56, 1, 1, true, '15412576842185c107ccf0bac0.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (42, 1, 'Продам квартиру', 'Срочно', '2018-12-12 06:16:40', 765748484, 2, 7, false, 'ls3a09185c107d98b821d.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (26, 2, 'Продам кота', 'Заберите!!!!Не могу прокормить', '2018-11-24 17:53:25', 300, 1, 1, true, 'kak-pohudet-koshke.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (39, 1, 'Продам автомобиль', 'Новые Часы с керамическом браслетом ,на гарантии . Покупала за 5490,отдам за 3000р. Коробка и пакет оригинальный ) продажа в связи с покупкой часов apple', '2018-12-09 19:30:55', 4, 2, 2, true, '15412576782535c0f2c135e8b9.jpg');
+INSERT INTO post (id, user_id, title, description, date, price, category_id, city_id, "isActive", img) VALUES (36, 1, 'Продам автомобиль', 'Новые Часы с керамическом браслетом ,на гарантии . Покупала за 5490,отдам за 3000р. Коробка и пакет оригинальный ) продажа в связи с покупкой часов apple', '2018-12-08 06:15:05', 400000, 2, 2, true, '15412576782535c0f2c2bd2ec6.jpg');
 
 
 --
@@ -420,7 +428,7 @@ INSERT INTO post VALUES (21, 9, 'Продам свинку', 'Продам по�
 -- Name: post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('post_id_seq', 24, true);
+SELECT pg_catalog.setval('post_id_seq', 42, true);
 
 
 --
@@ -429,11 +437,11 @@ SELECT pg_catalog.setval('post_id_seq', 24, true);
 -- Data for Name: profile; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO profile VALUES (3, 'Анна Витальевна', 1, 3421541335, 'Очень сложно писать о себе) ', '2018-11-20 19:47:12', 'XtlDa6Ij0E0.jpg');
-INSERT INTO profile VALUES (1, 'Анна', 1, 3421541335, 'Привет', '2018-11-19 18:47:12', '1510512370881.jpg');
-INSERT INTO profile VALUES (2, 'Сергио', 4, 2131413242, 'Я хороший мальчик', '2018-11-20 18:47:12', '1511847807787.jpg');
-INSERT INTO profile VALUES (4, 'Серерж', 3, 346534534, 'привет', '2018-11-20 19:47:12', 'XtlDa6Ij0E0.jpg');
-INSERT INTO profile VALUES (9, 'Гена', 1, 3421541335, 'Гена', '2018-11-23 18:21:36', '1541277431168.jpg');
+INSERT INTO profile (user_id, name, city_id, phone, description, "dateRegistration", img) VALUES (3, 'Анна Витальевна', 1, 3421541335, 'Очень сложно писать о себе) ', '2018-11-20 19:47:12', 'XtlDa6Ij0E0.jpg');
+INSERT INTO profile (user_id, name, city_id, phone, description, "dateRegistration", img) VALUES (2, 'Сергио', 4, 2131413242, 'Я хороший мальчик', '2018-11-20 18:47:12', '1511847807787.jpg');
+INSERT INTO profile (user_id, name, city_id, phone, description, "dateRegistration", img) VALUES (4, 'Серерж', 3, 346534534, 'привет', '2018-11-20 19:47:12', 'XtlDa6Ij0E0.jpg');
+INSERT INTO profile (user_id, name, city_id, phone, description, "dateRegistration", img) VALUES (5, 'Гена', 1, 3421541335, 'Гена', '2018-11-23 18:21:36', '1541277431168.jpg');
+INSERT INTO profile (user_id, name, city_id, phone, description, "dateRegistration", img) VALUES (1, 'Анна', 1, 2432, 'Приветgnghgjghj', '2018-11-19 18:47:12', '8fpprvwg1la5c126e2bf380d.jpg');
 
 
 --
@@ -451,11 +459,22 @@ SELECT pg_catalog.setval('profile_user_id_seq', 1, false);
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "user" VALUES (1, 'chvse@north.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', true);
-INSERT INTO "user" VALUES (2, 'sergio@ssd.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL);
-INSERT INTO "user" VALUES (3, 'any@any.ru', 'b1b3773a05c0ed0176787a4f1574ff0075f7521e', NULL);
-INSERT INTO "user" VALUES (4, 'cato@pes.ru', '7ab515d12bd2cf431745511ac4ee13fed15ab578', NULL);
-INSERT INTO "user" VALUES (9, 'gena@go.ru', '7ab515d12bd2cf431745511ac4ee13fed15ab578', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (1, 'chvse@north.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', true);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (2, 'sergio@ssd.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', false);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (3, 'any@any.ru', 'b1b3773a05c0ed0176787a4f1574ff0075f7521e', false);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (5, 'gena@go.ru', '7ab515d12bd2cf431745511ac4ee13fed15ab578', false);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (4, 'cato@pes.ru', '7ab515d12bd2cf431745511ac4ee13fed15ab578', false);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (10, 'efwfewf@dfsdf.ru', '67d76bb21b361cb673a1483862df27cb2673c966', false);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (11, 'dfgdsg@vc.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (12, 'sad@boy.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (13, 'ewr@ree.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (14, 'rer@rer.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (15, 'ewf@dfsdf.ru', '7c4a8d09ca3762af61e59520943dc26494f8941b', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (16, 'fdsgs@dfsf.ru', '7b52009b64fd0a2a49e6d8a939753077792b0554', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (17, 'ert@rdsf.u', '7b52009b64fd0a2a49e6d8a939753077792b0554', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (18, 'dfjsdf@df.ru', '784ef0059227d57909c9d81632b89915adc03c22', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (19, 'cxvs@dsf.ru', 'eadc1dd8fc279583d5552700ae5d248e3fa123bd', NULL);
+INSERT INTO "user" (id, email, password, "isAdmin") VALUES (20, 'werwer@fdg.ru', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', NULL);
 
 
 --
@@ -464,7 +483,7 @@ INSERT INTO "user" VALUES (9, 'gena@go.ru', '7ab515d12bd2cf431745511ac4ee13fed15
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_id_seq', 9, true);
+SELECT pg_catalog.setval('user_id_seq', 20, true);
 
 
 --
@@ -551,7 +570,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2018-11-23 23:10:59
+-- Completed on 2018-12-13 22:22:05
 
 --
 -- PostgreSQL database dump complete
