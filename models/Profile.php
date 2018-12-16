@@ -6,6 +6,7 @@ use yii\web\UploadedFile;
 use Imagine\Gd;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
+use yii\db\Exception;
 use Yii;
 
 /**
@@ -107,6 +108,7 @@ class Profile extends \yii\db\ActiveRecord
 
     public function getFolder()
     {
+      $user = Yii::app()->db->createCommand();
       return Yii::getAlias('@web').'uploads/image_profile/' ;
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 use app\models\Post;
+use app\models\Profile;
 use Yii;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -10,6 +11,8 @@ use app\models\SiteSearch;
 use app\models\Category;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use yii\base\Configurable;
+use yii\db\sqlite\Command;
 
 
 class SiteController extends Controller
@@ -58,22 +61,35 @@ class SiteController extends Controller
         ]);
       }
       //Вывод всех объявлений на главную страницу и пагинация
-       public function actionIndex()
+
+  /**
+   * @return string
+   * @throws \yii\db\Exception
+   */
+  public function actionIndex()
       {
 
         $categories= Category::find()->all();
         $cities = City::find()->all();
+var_dump($cities);
 
-        if (isset($_GET['category'])) {
-          $category = Category::find()->where(['title'=>$_GET['category']])->all();
-          $cat_id = ArrayHelper::getColumn($category,'id');
-          $posts = Post::find()->where(['category_id'=>$cat_id,'isActive'=>true]);
-        }
+//          $profile = Profile::find()->where(['user_id'=>Yii::$app->user->id])->all();
+//          $city_id = ArrayHelper::getColumn($profile,'city_id');
+//          foreach ($cities as $city) {
+//            if($city->id === $city_id  ) {
+//            //  $city = ArrayHelper::getColumn(;
+//              var_dump(1);
+//            }
+//          }
+
+
 
         if (isset($_GET['city'])) {
-          $city = City::find()->where(['city'=>$_GET['city']])->all();
-          $city_id = ArrayHelper::getColumn($city,'id');
-          $posts = Post::find()->where(['city_id'=>$city_id,'isActive'=>true]);
+
+            $city = City::find()->where(['city' => $_GET['city']])->all();
+            $city_id = ArrayHelper::getColumn($city, 'id');
+            $posts = Post::find()->where(['city_id' => $city_id, 'isActive' => true]);
+
         }
 
         if (isset($_GET['category']) && isset($_GET['city']) ) {

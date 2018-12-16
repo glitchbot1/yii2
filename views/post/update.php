@@ -4,6 +4,7 @@
   use \yii\helpers\ArrayHelper;
   use \yii\widgets\ActiveField;
   use yii\helpers\Url;
+\app\assets\AppAsset::register($this);
 ?>
 
   <div class="row">
@@ -22,11 +23,16 @@
         <div class="rule_post_image">
           <p class="p_text_image">Вы можете загрузить фотографию в формате jpeg, jpg, png и весом не более 10 Мб</p>
         </div>
-        <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['post/delete-image', 'id' => $update_model->id]) ?>"></a>
         <?php if($update_model->img): ?>
+          <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['post/delete-image', 'id' => $update_model->id]) ?>"></a>
           <img class="post__image " src="<?= Url::toRoute(['uploads/image_post/'.$update_model->img])?>" alt="image">
         <?php else: ?>
-          <img class="post_image" src="<?= Url::to(['/uploads/image_post/no-photo.png','id' => $update_model->id])?>" alt="no-photo">
+          <div>
+            <img class="post__image" id="img-preview" src="<?= Url::toRoute(['uploads/image_post/no-photo.png'])?>"/>
+          </div>
+          <div>
+            <input type="reset" class="btn btn-danger" value="Отмена">
+          </div>
         <?php endif; ?>
         <?= $form->field($update_model,'image')->fileInput(['class'=>'uploading-file', 'id'=>'input-file'])?>
         <?= Html::submitButton('Сохранить изменения ',['class'=> 'btn btn-success button_update_post'])?>

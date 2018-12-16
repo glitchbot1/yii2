@@ -16,8 +16,7 @@ $('#input-file').change(function () {
     console.log('Ошибка');
   }
 });
-
 $('#post_form').bind('reset', function () {
-  $('#img-preview').attr('src','/post/no-photo.png');
+  $('#img-preview').attr('src','/uploads/image_post/no-photo.png');
 
 });

@@ -153,6 +153,11 @@ a.desc:after {
     padding-left: 50px;
     padding-top: 20px;
 }
+.post-border {
+    border: 2px solid white;
+    border-radius: 40px;
+
+}
 .post-border:hover {
     border: 2px solid silver;
     border-radius: 40px;
@@ -189,11 +194,13 @@ textarea.form-control{
     display: inline;
     color:red;
 }
-.navbar-collapse {
-    background-color:#d9edf7;
-}
+
 .title-index {
     color: black;
+}
+.rocket_image {
+    padding-left: 400px;
+    height: 50px;
 }
 
 

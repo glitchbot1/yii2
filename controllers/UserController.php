@@ -73,14 +73,14 @@ class UserController extends Controller
         if(Yii::$app->request->isPjax) {
           if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->signup()) {
-              return $this->goHome();
+              return $this->redirect('login');
             }
           }
         }
       return $this->render('signup',['model'=>$model]);
       }
 
-      public function actionLogin()   //А вторизации
+      public function actionLogin()   //Авторизации
       {
         $login_model = new Login();
 
