@@ -24,7 +24,7 @@ use yii\helpers\Url;
 <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-body">
-        <img src="<?= Url::toRoute(['/image?file='. $user_model->img])?>" alt="fdg">
+        <img class="profile__image" src="<?= Url::toRoute(['/image?file='. $user_model->img])?>" alt="fdg">
         <p><strong> Имя: </strong><?= $user_model->name ?></p>
         <p><strong> На сайте: </strong><?= $user_model->dateRegistration?></p>
         <p><strong> Объявлений: <?= $count?></p>
