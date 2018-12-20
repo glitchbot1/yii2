@@ -23,13 +23,14 @@ use yii\helpers\Url;
         'id'=>'post_form',
         'class'=>'form-horizontal',
         ])?>
-        <?php $items_category = ArrayHelper::map($category, 'id','title');?>
-        <?php $items_city = ArrayHelper::map($city, 'id','city');?>
-        <?php $params = ['prompt'=> ' ']?>
-        <?= $form->field($post_model,'title')->textInput() ?>
-        <?= $form->field($post_model,'category_id')->dropDownList($items_category,$params)?>
-        <?= $form->field($post_model,'description')->textarea(['rows'=>5]) ?>
-        <?= $form->field($post_model,'city_id')->dropDownList($items_city,$params)?>
+
+      <?php $items_category = ArrayHelper::map($category, 'id','title');?>
+      <?php $items_city = ArrayHelper::map($city, 'id','city');?>
+      <?php $params = ['prompt'=> ' ']?>
+      <?= $form->field($post_model,'title')->textInput() ?>
+      <?= $form->field($post_model,'category_id')->dropDownList($items_category,$params)?>
+      <?= $form->field($post_model,'description')->textarea(['rows'=>5]) ?>
+      <?= $form->field($post_model,'city_id')->dropDownList($items_city,$params)?>
         <?= $form->field($post_model,'price')->textInput() ?>
         <label for="input-file" class="btn btn-success">Загрузить</label>
         <div class="rule_post_image">

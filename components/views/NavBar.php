@@ -47,7 +47,7 @@ AppAsset::register($this);
           <?= Html::beginForm(['/user/profile'], 'post')
           . Html::submitButton(
             'Личный кабинет',
-            ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px; color:black; font-size: 17px;"]
+            ['class' => 'btn btn-light logout', 'style'=>"padding-top:10px; color:black; font-size: 17px;"]
           )
           . Html::endForm() ?>
         </li>

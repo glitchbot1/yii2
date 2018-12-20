@@ -71,48 +71,39 @@ class SiteController extends Controller
 
         $categories= Category::find()->all();
         $cities = City::find()->all();
-var_dump($cities);
+        $city_id = Profile::findOne(Yii::$app->user->id)->city_id;
 
-//          $profile = Profile::find()->where(['user_id'=>Yii::$app->user->id])->all();
-//          $city_id = ArrayHelper::getColumn($profile,'city_id');
-//          foreach ($cities as $city) {
-//            if($city->id === $city_id  ) {
-//            //  $city = ArrayHelper::getColumn(;
-//              var_dump(1);
-//            }
-//          }
+            if (isset($_GET['city'])) {
 
+              $city = City::find()->where(['city' => $_GET['city']])->all();
+              $city_id = ArrayHelper::getColumn($city, 'id');
+              $posts = Post::find()->where(['city_id' => $city_id, 'isActive' => true]);
 
+            }
 
-        if (isset($_GET['city'])) {
+            if (isset($_GET['category']) && isset($_GET['city'])) {
+              $category = Category::find()->where(['title' => $_GET['category']])->all();
+              $cat_id = ArrayHelper::getColumn($category, 'id');
+              $city = City::find()->where(['city' => $_GET['city']])->all();
+              $city_id = ArrayHelper::getColumn($city, 'id');
+              $posts = Post::find()->where(['city_id' => $city_id, 'category_id' => $cat_id, 'isActive' => true]);
+            }
 
-            $city = City::find()->where(['city' => $_GET['city']])->all();
-            $city_id = ArrayHelper::getColumn($city, 'id');
-            $posts = Post::find()->where(['city_id' => $city_id, 'isActive' => true]);
+            if (!isset($_GET['category']) && !isset($_GET['city'])) {
+              $posts = Post::find()->where(['isActive' => true,]);
 
-        }
+            }
 
-        if (isset($_GET['category']) && isset($_GET['city']) ) {
-          $category = Category::find()->where(['title'=>$_GET['category']])->all();
-          $cat_id = ArrayHelper::getColumn($category,'id');
-          $city = City::find()->where(['city'=>$_GET['city']])->all();
-          $city_id = ArrayHelper::getColumn($city,'id');
-          $posts = Post::find()->where(['city_id'=>$city_id,'category_id'=>$cat_id,'isActive'=>true]);
-        }
-
-        if (!isset($_GET['category']) && !isset($_GET['city']) ) {
-          $posts = Post::find()->where(['isActive'=>true,]);
-
-        }
-
-        $pages = new Pagination(['totalCount' => $posts->count()]);
-        $model = $posts->offset($pages->offset)->limit($pages->limit)->orderBy('date DESC')->all();
+            $pages = new Pagination(['totalCount' => $posts->count()]);
+            $model = $posts->offset($pages->offset)->limit($pages->limit)->orderBy('date DESC')->all();
 
         return $this->render('index',[
           'model'=>$model,
           'pages'=>$pages,
           'categories'=>$categories,
           'cities'=>$cities,
+          'city_id'=>$city_id,
+
 
         ]);
       }

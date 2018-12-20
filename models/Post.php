@@ -41,7 +41,7 @@ class Post extends \yii\db\ActiveRecord
         [['category_id'],'required','message'=>'Выбрите категорию'],
         [['price'],'required','message'=>'Укажите цену'],
         ['price','integer','message'=>'Введите только целые цифры'],
-        ['image','file', 'extensions'=>'jpg,png,jpeg'],
+        ['image','file', 'extensions'=>'jpg,png,jpeg',],
         ['image','file', 'maxSize'=>1024*1024*10],
         ['img','string',],
         [['date'],'date','format'=>'php:Y-m-d H:i:s'],

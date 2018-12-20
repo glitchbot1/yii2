@@ -34,6 +34,7 @@
             <input type="reset" class="btn btn-danger" value="Отмена">
           </div>
         <?php endif; ?>
+      <?= Html::submitButton('Сохранить изменения ',['class'=> 'btn btn-success button_update_post'])?>
         <?= $form->field($update_model,'image')->fileInput(['class'=>'uploading-file', 'id'=>'input-file'])?>
         <?= Html::submitButton('Сохранить изменения ',['class'=> 'btn btn-success button_update_post'])?>
       <?php ActiveForm::end()?>

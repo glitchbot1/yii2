@@ -25,17 +25,17 @@ use yii\helpers\Url;
       <div class="row">
         <div class="col-md-2 col-lg-2"></div>
         <div class="col-sm-3 col-md-2 col-lg-2">
+
             <?php if ($profile_model->img) :  ?>
               <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['user/delete-image-profile', 'id' => $profile_model->user_id]) ?>"></a>
-              <img class="profile__image" src="<?= Url::toRoute('/image?file='. $profile_model->img )?>"alt="fdg">
+              <img class="profile__image" src="<?= Url::toRoute('/image?file='. $profile_model->img)?>" alt="fdg">
               <label for="input-file"  class="btn btn-success">Изменить</label>
               <?= $form->field($profile_model, 'photo')->fileInput(['class'=>'uploading-file', 'id'=>'input-file']) ?>
             <?php else :  ?>
               <img class="profile__image" src="<?= Url::toRoute(['uploads/image_profile/cap.jpg'])?>" alt="cap">
               <label for="input-file"  class="btn btn-success">Загрузить</label>
               <?= $form->field($profile_model, 'photo')->fileInput(['class'=>'uploading-file','id'=>'input-file']) ?>
-            <?php endif; ?>
-
+          <?php endif; ?>
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
           <?php $items_city = ArrayHelper::map($city,'id','city')?>
@@ -45,6 +45,7 @@ use yii\helpers\Url;
           <?= $form->field($profile_model,'phone')->textInput(['maxlength'=>10,'placeholder'=>'Телефон должен быть 10 цифр']) ?>
           <?= $form->field($profile_model,'description')->textarea(['rows'=>6]) ?>
           <?= Html::submitButton('Сохранить', ['class' => 'profile__btn_save btn btn-primary']) ?>
+
         </div>
       </div>
     </div>

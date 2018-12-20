@@ -49,15 +49,16 @@ class UserController extends Controller
         if ($profile_model->load(Yii::$app->request->post()) && $profile_model->validate()) {
           //Если форма была отправлена, то даные с формы загружаются в объект модели и проверяем на валидногсть
 
-          $photo = UploadedFile::getInstance($profile_model, 'photo');
-            if(!is_null($photo)) {
+            $photo = UploadedFile::getInstance($profile_model, 'photo');
+            if (!is_null($photo)) {
               $profile_model->img = $profile_model->uploadImage($photo);
             }
-             if ($profile_model->save()) {
-               // Вызываем метод  модели,если запись данных прошла успешно
+            if ($profile_model->save()) {
+              // Вызываем метод  модели,если запись данных прошла успешно
               Yii::$app->session->setFlash('success', 'Профиль изменен');
 
             }
+
             else { // Запись если  произошла ошибка
               Yii::$app->session->setFlash('error', 'Профиль не измененн');
             }

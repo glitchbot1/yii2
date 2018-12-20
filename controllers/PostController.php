@@ -49,8 +49,8 @@ class PostController extends Controller
         $post_model=new Post(); // Создаем новый объект
 
         $category = Category::find()->all();
+        $city = City::find()->asArray()->all();
 
-        $city = City::find()->all();
         //Загружаем его и проверяем валидацией
         if ($post_model->load(Yii::$app->request->post()) && $post_model->validate()) {
           //Метод загрузки изображения
@@ -75,7 +75,8 @@ class PostController extends Controller
         return $this->render('post', [
           'post_model' => $post_model,
           'category'=>$category,
-          'city'=>$city]);
+          'city'=>$city,
+        ]);
     }
 
     public function actionNotice() //Страница объявлений ползователя

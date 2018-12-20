@@ -108,7 +108,6 @@ class Profile extends \yii\db\ActiveRecord
 
     public function getFolder()
     {
-      $user = Yii::app()->db->createCommand();
       return Yii::getAlias('@web').'uploads/image_profile/' ;
     }
 
