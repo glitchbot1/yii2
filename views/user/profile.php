@@ -28,7 +28,7 @@ use yii\helpers\Url;
 
             <?php if ($profile_model->img) :  ?>
               <a class="glyphicon glyphicon glyphicon-remove" href="<? echo Url::to(['user/delete-image-profile', 'id' => $profile_model->user_id]) ?>"></a>
-              <img class="profile__image" src="<?= Url::toRoute('/image?file='. $profile_model->img)?>" alt="fdg">
+              <img class="profile__image" src="<?= Url::toRoute('/image?file='. $profile_model->img . '&width&height')?>" alt="fdg">
               <label for="input-file"  class="btn btn-success">Изменить</label>
               <?= $form->field($profile_model, 'photo')->fileInput(['class'=>'uploading-file', 'id'=>'input-file']) ?>
             <?php else :  ?>
